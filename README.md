@@ -6,13 +6,11 @@ This is a data analysis project for DSCI 522 (Data Science workflows); a course 
 
 ## About
 
-Here we attempt to build classification models using logistic regression and support vector machine (SVM) algorithms to predict whether an individual has diabetes based on health indicators and lifestyle factors. Specifically, we use the diabetes_binary_health_indicators_BRFSS2015.csv dataset containing 253,680 survey responses from the CDC's BRFSS 2015. The target variable Diabetes_binary is binary with two classes: 0 for no diabetes and 1 for prediabetes or diabetes. This dataset includes 21 feature variables and exhibits class imbalance between the two outcome categories.
+Here we attempt to build classification models using logistic regression and support vector machine (SVM) algorithms to predict whether an individual has diabetes based on health indicators and lifestyle factors. Specifically, we aim to evaluate the predictive performance of these models and compare their accuracy and efficiency for potential use in public health screening.
 
-Our goal is to identify which health indicators and lifestyle factors are most predictive of diabetes risk, and to evaluate whether survey-based features can accurately predict diabetes status for early intervention and public health screening purposes. 
+We use the diabetes_binary_health_indicators_BRFSS2015.csv dataset containing 253,680 survey responses from the CDC's BRFSS 2015. The target variable Diabetes_binary is binary with two classes: 0 for no diabetes and 1 for prediabetes or diabetes. The dataset includes 21 health and lifestyle features such as high blood pressure, high cholesterol, BMI, smoking status, physical activity, fruit and vegetable consumption, healthcare access, age, education, and income. Each row represents an individual survey respondent, with diabetes status determined through self-reported physician diagnosis.
 
 The data set used in this project is from the Behavioral Risk Factor Surveillance System (BRFSS) 2015, an annual health-related telephone survey conducted by the Centers for Disease Control and Prevention (CDC). The original dataset was cleaned and prepared by Alex Teboul and is available on Kaggle [here] https://www.kaggle.com/datasets/alexteboul/diabetes-health-indicators-dataset/data
-
-The dataset includes 21 health and lifestyle features such as high blood pressure, high cholesterol, BMI, smoking status, physical activity, fruit and vegetable consumption, healthcare access, age, education, and income. Each row represents an individual survey respondent, with diabetes status determined through self-reported physician diagnosis.
 
 ## Report
 
@@ -47,6 +45,8 @@ nb_conda_kernels
 Python and all packages listed in environment.yml
 
 ## License
+
+The original diabetes health indicators dataset used in this project is licensed under the Creative Commons CC0 1.0 Universal (CC0 1.0) Public Domain Dedication by Alex Teboul. This means the data is free to use for any purpose without restriction.
 
 The Diabetes Health Predictor report and analysis contained herein are licensed under the Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0) License. See the LICENSE.md file for more information. If re-using or re-mixing please provide attribution and link to this repository.
 
