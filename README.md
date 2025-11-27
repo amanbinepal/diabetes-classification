@@ -24,7 +24,7 @@ First time running the project,
 run the following from the root of this repository:
 
 ``` bash
-conda-lock install --name 522-project conda-lock.yml
+conda-lock install --name dsci-522-project-env conda-lock.yml
 ```
 
 To run the analysis,
