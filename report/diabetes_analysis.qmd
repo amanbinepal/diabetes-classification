@@ -1,0 +1,447 @@
+---
+title: Diabetes Analysis
+jupyter: python3
+---
+
+
+
+Data Reference: https://archive.ics.uci.edu/dataset/891/cdc+diabetes+health+indicators
+
+```{python}
+import pandas as pd
+import numpy as np
+import altair as alt
+```
+
+## Summary
+
+This project attempts to predict diabetes status using the Logistic Regression and LinearSVC models, against a baseline DummyClassifier on an imbalanced dataset. All models achieved similar accuracy on the test set (approximately 0.86), which highlights a key issue: accuracy alone is not a reliable performance metric.
+
+These findings motivate deeper exploratory data analysis, evaluation with additional metrics (precision, recall, F1), and exploration of alternative models and threshold tuning to get a more robust assessment of the model's predictability. 
+
+## Introduction
+
+Diabetes is a chronic disease that prevents the body from properly controlling blood sugar levels, which can lead to serious health problems including heart disease, vision loss, kidney disease, and limb amputation (Teboul, 2020). Given the severity of the disease, early detection can allow people to make lifestyle changes and receive treatment that can slow disease progression. We believe that machine learning models using survey data can offer a promising way to create accessible, cost-effective screening tools to identify high-risk individuals and support public health efforts.
+
+### Research Question
+Can we use health indicators and lifestyle factors from the CDC's Behavioral Risk Factor Surveillance System (BRFSS) survey to accurately predict whether an individual has diabetes?
+
+We are looking to :
+1. Build and evaluate classification models that predict diabetes status based on 21 health and lifestyle features
+2. Compare the performance and efficiency of logistic regression and support vector machine (SVM) classifiers
+3. Assess whether survey-based features can provide sufficiently accurate predictions for practical screening applications
+
+## Methods & Results
+
+This analysis uses the diabetes_binary_health_indicators_BRFSS2015.csv dataset, a cleaned and preprocessed version of the CDC's 2015 Behavioral Risk Factor Surveillance System (BRFSS) survey data, made available by Alex Teboul on Kaggle (Teboul, 2020).
+
+For this analysis, we split the dataset into training (80%) and testing (20%) sets using a fixed random state (522) to ensure reproducibility. We implemented two classification algorithms:
+
+1. Logistic Regression: A linear model appropriate for binary classification that estimates the probability of diabetes based on a linear combination of features.
+2. Linear Support Vector Classifier (SVC): A classifier that finds an optimal hyperplane to separate diabetic from non-diabetic individuals.
+
+Both models were implemented using scikit-learn pipelines that include feature standardization (StandardScaler) to normalize the numeric features to comparable scales. Binary categorical features were already processed in the dataset and were set to pass through the column transformer. We evaluated model performance using cross-validation on the training set and final accuracy assessment on the held-out test set.
+
+Our results show that both models achieve approximately 86% accuracy, with logistic regression demonstrating slightly faster training time.
+
+## Discussion
+
+The baseline DummyClassifier achieves an accuracy score of about 0.86, derived from assigning the most frequent class (non-diabetic) to all patients. This highlights how approximatey 86% of the dataset is non-diabetic. Both Logistic Regression and LinearSVC achieve similar accuracy (approximately 0.86) with little to no improvement.
+
+The EDA showed that there is class imbalance (more non-diabetic than diabetic patients) and this may affect the models’ reliability. Therefore, more analysis is needed to explore additional models, check class balance with metrics such as precision and recall, examine confusion matrices, and test different data splits or tune hyperparameters to determine if performance is stable across scenarios before drawing strong conclusions.
+
+The similarity in test scores is an unexpected finding. With a clean dataset containing informative and diverse features, we would expect the classification models to perform at least better than the dummy classifier. Additionally, initial hyperparameter tuning for logistic regression did not affect accuracy (data not shown). This finding highlights the importance of understanding the data through EDA to interpret where accuracy scores come from.
+
+This suggests the next step for deeper EDA, including distributions, to see whether features overlap and whether the model can separate them effectively. Other future questions would be determining which features are most important for classifying an individual as diabetic or not, evaluating the probability estimates, and assessing whether all features are truly helpful for drawing conclusions.
+
+## Analysis
+
+### Read in Data
+
+```{python}
+from ucimlrepo import fetch_ucirepo 
+   
+cdc_diabetes_health_indicators = fetch_ucirepo(id=891) 
+  
+dat = cdc_diabetes_health_indicators.data.original
+```
+
+### Train Test Split
+
+```{python}
+from sklearn.linear_model import LogisticRegression
+from sklearn.model_selection import cross_val_score, cross_validate, train_test_split
+from sklearn.pipeline import make_pipeline
+from sklearn.preprocessing import StandardScaler
+
+train_df, test_df = train_test_split(dat, test_size=0.2, random_state=522)
+
+X_train, y_train = (
+    train_df.drop(columns=["Diabetes_binary"]),
+    train_df["Diabetes_binary"],
+)
+X_test, y_test = (
+    test_df.drop(columns=["Diabetes_binary"]),
+    test_df["Diabetes_binary"],
+)
+```
+
+
+
+```{python}
+train_df.head()
+```
+
+```{python}
+train_df.tail()
+```
+
+```{python}
+train_df.shape
+```
+
+```{python}
+train_df.columns
+```
+
+### Data Validation
+
+```{python}
+import pointblank as pb
+########################## Data Validation: Correct file format
+
+## Checks that the training data has exactly the same number of columns as the 
+## DataFrame itself (validates the column count)
+validation_1_1 = (
+    pb.Validate(data=train_df)
+    .col_count_match(len(train_df.columns))
+    .interrogate()
+)
+
+## Checks that the training data has correct number of observations/rows
+## 80% split for training data from the total of original data instances.
+rows, cols = dat.shape
+train_target = int(rows * 0.8)
+
+validation_1_2 = (
+    pb.Validate(data=train_df)
+    .row_count_match(train_target)
+    .interrogate()
+)
+
+validation_1_1
+validation_1_2
+```
+
+```{python}
+########################## Data Validation: Correct column names
+### Check that data contains all required column names and matches the expected schema.
+expected_columns = ['ID', 'Diabetes_binary', 'HighBP', 'HighChol', 'CholCheck', 'BMI',
+                   'Smoker', 'Stroke', 'HeartDiseaseorAttack', 'PhysActivity', 'Fruits',
+                   'Veggies', 'HvyAlcoholConsump', 'AnyHealthcare', 'NoDocbcCost',
+                   'GenHlth', 'MentHlth', 'PhysHlth', 'DiffWalk', 'Sex', 'Age',
+                   'Education', 'Income']
+validation_2 = (
+    pb.Validate(data = train_df)
+    .col_exists(columns = expected_columns)
+    .interrogate()
+)
+validation_2
+```
+
+```{python}
+########################## Data Validation: No empty observations
+## Checks that all rows are complete and contain no missing values.
+validation_3 = (
+    pb.Validate(data = train_df)
+    .rows_complete() 
+    .interrogate()
+)
+validation_3
+```
+
+```{python}
+########################## Data Validation: No empty observations
+## Checks that each column has 100 % non-missing values. There are no missing values in dataset. 
+threshold = 1  # There are no missing values.
+
+validator = pb.Validate(data=train_df)
+
+for col in train_df.columns:
+    validator = validator.col_vals_not_null(columns=str(col), thresholds=threshold)
+
+validation_4 = validator.interrogate()
+validation_4
+```
+
+```{python}
+numeric_features = ["BMI"]
+binary_features = ["HighBP", "HighChol", "CholCheck", "Smoker", "Stroke", 
+                   "HeartDiseaseorAttack", "PhysActivity", "Fruits", "Veggies", "HvyAlcoholConsump", 
+                   "AnyHealthcare", "NoDocbcCost", "DiffWalk", "Sex"]
+ordinal_features = ["GenHlth", "MentHlth", "PhysHlth", "Age", "Education", "Income"]
+```
+
+```{python}
+import pointblank as pb
+
+########################## Data Validation: Correct data types in each column
+################ If fails: Critical checks (schema) -> Let it fail naturally and stop the pipeline
+schema_columns = [(col, "int64") for col in train_df.columns]
+schema = pb.Schema(columns=schema_columns)
+(
+    pb.Validate(data=train_df)
+    .col_schema_match(schema=schema)
+    .interrogate()
+)
+```
+
+```{python}
+########################## Data Validation: No duplicate observations
+################ If fails: Non-Critical -> raise warnings and continue
+unique_key_cols = ["ID"]  # use only the primary key column "ID" 
+try: 
+    (
+        pb.Validate(data=train_df)
+        .rows_distinct(columns_subset=unique_key_cols)
+        .interrogate()
+    )
+except: 
+    print("Data Validation failed: Duplicate Observation detected")
+```
+
+```{python}
+########################## Data Validation: No outlier or anomalous values for NUMERIC Features
+###### Through define acceptable numeric ranges 
+## (based on the data collection method and domain knowledge)
+################ If fails: Non-Critical -> raise warnings and continue 
+try: 
+    (
+        pb.Validate(data=train_df)
+        .col_vals_between(columns="BMI", left=10, right=100) # BMI is unlikely to go under 10 or exceed 100
+        .interrogate()
+    )
+except: 
+    print("Data Validation failed: Outlier or anomalous values detected")
+```
+
+```{python}
+################################## checking the value ranges for ordinal features
+for f in ordinal_features: 
+    temp_col = train_df[f]
+    print(f"========================================== {f}")
+    print(f"datatype: {temp_col.dtype}")
+    print(temp_col.sort_values().value_counts().index)
+```
+
+```{python}
+########################## Data Validation: Correct category levels for Category/Ordinal Features
+###### Through define acceptable value set or range
+## (based on the data collection method and domain knowledge)
+################ If fails: Non-Critical -> raise warnings and continue 
+try: 
+    (
+        pb.Validate(data=train_df)
+        .col_vals_in_set(columns=binary_features, set=[0,1]) # binary features: 0/1
+        .col_vals_in_set(columns="GenHlth", set=list(range(1,6))) # scale of 1-5
+        .col_vals_between(columns=["MentHlth", "PhysHlth"], left=0, right=30) # number of days out of 30 days
+        .col_vals_in_set(columns="Age", set=list(range(1,14))) # scale of 1-13
+        .col_vals_in_set(columns="Education", set=list(range(1,7))) # scale of 1-6
+        .col_vals_in_set(columns="Income", set=list(range(1,9))) # scale of 1-8
+        .interrogate()
+    )
+except: 
+    print("Data Validation failed: Incorrect category levels detected")
+```
+
+```{python}
+train_df.info()
+```
+
+```{python}
+from deepchecks.tabular import Dataset, Suite
+
+deep_train = Dataset(train_df.drop(columns=['ID']),
+                     label="Diabetes_binary",
+                     cat_features=binary_features)
+```
+
+```{python}
+from deepchecks.tabular.checks import ClassImbalance, FeatureLabelCorrelation, FeatureFeatureCorrelation
+import anywidget, ipywidgets
+
+########################## Data Validation: Check for class imbalance, anomalous results between feature-feature or feature-label
+### Having class imbalance for diabetes prediction is expected, isn't a warning about the dataset
+### Feature-label: Chose 0.5 as a threshold, given that it is variable health and lifestyle data and that it would be unexpected to find high coorelations for any one feature
+### Feature-Feature: watches for multicolinearity, set threhold higher because it's reasonable for some features to potentially be more coorelated here
+
+### Ian Gault: I looked up example on ChatGPT5 on how to use deepchecks for class imbalance and coorelations and what modules they would be in. I found the synthax with Suite and implemented that style here.  I was also running into errors packages being synced or needed for deepchecks, so found out more information about these errors too for debugging purposes.
+
+suite = Suite(
+    "Validation",
+    ClassImbalance(),
+    FeatureLabelCorrelation(correlation_threshold=0.5),
+    FeatureFeatureCorrelation(correlation_threshold=0.7),
+)
+
+suite_result = suite.run(deep_train)
+
+suite_result
+```
+
+### Data Visualization
+
+```{python}
+# Check the inbalance sample size of the two classes
+alt.data_transformers.enable('vegafusion')
+
+alt.Chart(train_df, title = "Number of Records of Two Classes").mark_bar().encode(
+    x = "Diabetes_binary:N", 
+    y = "count()"
+).properties(
+    width=150,
+    height=250)
+```
+
+```{python}
+# Boxplot for Numeric Features
+alt.Chart(train_df).mark_boxplot().encode(
+    x=alt.X('Diabetes_binary:N', title='Diabetes (0/1)'),
+    y=alt.Y(alt.repeat('row'), type='quantitative')
+).properties(
+    width=200,
+    height=150
+).repeat(
+    row=numeric_features, 
+)
+
+# Those having diabetes (diabetes_binary = 1) have a higher BMI on average
+```
+
+```{python}
+# Bar Chart of Proportion with Diabetes for Binary Features
+alt.Chart(train_df).mark_bar().transform_fold(
+    binary_features,
+    as_=['feature', 'value']
+).encode(
+    x=alt.X('value:N', title='0 or 1'),
+    y=alt.Y('mean(Diabetes_binary):Q', title='Proportion with Diabetes'),
+).properties(
+    width=150, 
+    height=150
+).facet(
+    facet='feature:N', 
+    columns=5
+)
+```
+
+```{python}
+# Bar Chart for Ordinal Features
+alt.Chart(train_df).mark_bar(size=20).encode(
+    x=alt.X(alt.repeat("row"),type="quantitative", sort="ascending"), 
+    y="count()",
+    color="Diabetes_binary:N",
+    column=alt.Column("Diabetes_binary:N")
+).properties(
+    width=200, 
+    height=150
+).repeat(
+    row=ordinal_features
+)
+```
+
+### Model Training
+
+#### Feature Processing
+
+```{python}
+dat.columns
+```
+
+```{python}
+# features
+numeric_feats = ["GenHlth", "Education", "Income", "Age", "MentHlth", "PhysHlth", "BMI"]
+
+
+passthrough_feats = [
+    "HighBP",
+    "HighChol",
+    "CholCheck",
+    "Smoker",
+    "Stroke",
+    "HeartDiseaseorAttack",
+    "PhysActivity",
+    "Fruits",
+    "Veggies",
+    "HvyAlcoholConsump",
+    "AnyHealthcare",
+    "NoDocbcCost",
+    "DiffWalk",
+    "Sex"
+]
+```
+
+```{python}
+from sklearn.compose import make_column_transformer
+
+preprocessor = make_column_transformer(
+    (StandardScaler(), numeric_feats),
+    ("passthrough", passthrough_feats)
+)
+```
+
+#### Dummy Classifier
+
+```{python}
+from sklearn.dummy import DummyClassifier
+
+dummy_df = DummyClassifier(strategy="most_frequent", random_state=552)
+
+scores_dummy = pd.DataFrame(cross_validate(dummy_df, X_train, y_train, return_train_score=True)).mean()
+scores_dummy
+```
+
+#### Logistic Regression
+
+```{python}
+lr_pipe = make_pipeline(preprocessor, LogisticRegression(max_iter=1000))
+
+scores_logistic = cross_validate(lr_pipe, X_train, y_train, return_train_score=True)
+results = pd.DataFrame(scores_logistic)
+results.mean()
+```
+
+#### Linear SVC
+
+```{python}
+from sklearn.svm import LinearSVC
+
+linear_svc_pipe = make_pipeline(preprocessor, LinearSVC(max_iter=5000))
+
+scores = cross_validate(linear_svc_pipe, X_train, y_train, return_train_score=True)
+results = pd.DataFrame(scores)
+results.mean()
+```
+
+#### Final Test (predict on the testset)
+
+```{python}
+from sklearn.metrics import accuracy_score
+
+lr_pipe.fit(X_train, y_train)
+prediction_lr = lr_pipe.predict(X_test)
+accuracy_lr = accuracy_score(y_test, prediction_lr)
+
+linear_svc_pipe.fit(X_train, y_train)
+prediction_svc = linear_svc_pipe.predict(X_test)
+accuracy_svc = accuracy_score(y_test, prediction_svc)
+print(f"The accuracy of the Logistic Regression model is {accuracy_lr}")
+print(f"The accuracy of Linear SVC model is {accuracy_svc}")
+```
+
+## Conclusion
+
+After training, Logistic Regression and Linear SVC produced similar accuracy on X_test (about 86%), with Logistic Regression training faster. Given the small difference, either model could be chosen for further evaluation; if speed and interpretability/probability estimates are important, it would make sense to go with Logistic Regression.
+
+A higher-priority next step is addressing class imbalance and re-evaluating both models to see if they outperform the dummy classifier. This motivates deeper EDA, examining feature distributions and predictions, reviewing confusion matrices, and conducting hyperparameter tuning to test for potential improvements. At this point, we cannot draw firm conclusions about the models’ predictive ability based on the current dataset and features.
+
