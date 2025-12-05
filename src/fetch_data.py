@@ -10,7 +10,7 @@ def main():
     cdc_diabetes_health_indicators = fetch_ucirepo(id=891) 
     dat = cdc_diabetes_health_indicators.data.original
     
-    output_path = '../data/raw/ted1.csv'
+    output_path = 'objects/diabetes_binary_health_indicators_BRFSS2015.csv'
     dat.to_csv(output_path, index=False)
     
 if __name__ == '__main__':
