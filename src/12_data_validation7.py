@@ -2,7 +2,7 @@ import pandas as pd
 import pointblank as pb
 
 # Read in the CSV file - from split_data.py script output
-train_df = pd.read_csv('objects/train_df.csv')
+train_df = pd.read_csv("src/objects/train_df.csv")
 
 # Data Validation - Check for no outliers in BMI (numeric range check)
 validation_7 = (
@@ -13,7 +13,11 @@ validation_7 = (
 
 # Check if validation passed and save data validation results
 if validation_7.all_passed():
-    pd.DataFrame({'result': ['PASS']}).to_csv('objects/pass_data_validation7.txt', index=False)
+    pd.DataFrame({"result": ["PASS"]}).to_csv(
+        "src/objects/pass_data_validation7.txt", index=False
+    )
 else:
-    pd.DataFrame({'result': ['FAILED']}).to_csv('objects/failed_data_validation7.txt', index=False)
+    pd.DataFrame({"result": ["FAILED"]}).to_csv(
+        "src/objects/failed_data_validation7.txt", index=False
+    )
     print("Warning: Outlier values detected in BMI")
