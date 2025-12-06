@@ -24,5 +24,6 @@ dependencies:
       - deepchecks==0.19.1
       - anywidget==0.9.21
       - ipywidgets==8.1.8
+      - great-tables[extra]==0.20.0
   
 
