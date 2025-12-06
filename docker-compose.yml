@@ -3,7 +3,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: amanbinepal/docker-522-project
+    image: amanbinepal/docker-522-project:v1.0.0
     container_name: 522-project
     ports:
       - "8888:8888"

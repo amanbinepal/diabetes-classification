@@ -1,5 +1,5 @@
 # use the miniforge base, make sure you specify a verion
-FROM condaforge/miniforge3:latest
+FROM condaforge/miniforge3:25.11.0-0
 
 # copy the lockfile into the container
 COPY conda-lock.yml conda-lock.yml
