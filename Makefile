@@ -85,3 +85,7 @@ validate: # Run scripts for data validation
 
 eda: ## Run EDA
 	python src/16_eda_visualization.py
+
+model: ## Run model training and testing
+	python src/17_model_validation_training.py
+	python src/18_model_testing.py
