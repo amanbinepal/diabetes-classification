@@ -26,15 +26,19 @@ from great_tables import GT
     help="Response Training dataset CSV file",
 )
 def model_training(x_train, y_train, out_dir="results/models"):
-    """This function cross validates.
-        1. number of record bar chart by classes ("plot_class.png")
-        2. numeric features' boxplot by classes ("plot_numeric_box.png")
-        3. binary features' bar chart by classes ("plot_binary_bar.png")
-        4. ordinal features' bar chart by classes ("plot_ordinal_bar.png")
+    """This function cross validates and trains our models
+        1. Sets up ML pipeline
+        2. Creates DummyClassifier
+        3. Creates LogisticRegression Classifier
+        4. Creates LinearSVC Classifier
+        5. Creates cross validate table comparing models ("model_training.png")
+        6. Trains LogisticRegression and LinearSVC on full training set
+        7. Exports models as pickles for testing (*.pkl)
 
     Args:
-        train_file (string): the path to the train data set Defaults to "objects/train_df.csv".
-        out_dir (str, optional): the folder to save the plots. Defaults to "../results/figures".
+        x_train (string): the path to the x_train data set Defaults to "src/objects/X_train.csv".
+        y_train (string): the path to the y_train data set Defaults to "src/objects/y_train.csv".
+        out_dir (str, optional): the folder to save the plots. Defaults to "results/models".
     """
 
     # ============================ read in training and test data
@@ -100,6 +104,7 @@ def model_training(x_train, y_train, out_dir="results/models"):
     results_table = pd.DataFrame(results)
 
     # ============================ Export Great Table
+    # Ian Gault: used ChatGPT5 to help introduce me to great_table package
     great_table = (
         GT(results_table.rename(columns={"index": "Metrics"}))
         .tab_header(

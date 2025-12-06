@@ -2,7 +2,7 @@ import pandas as pd
 import pointblank as pb
 
 # Read in the CSV file - from split_data.py script output
-train_df = pd.read_csv('objects/train_df.csv')
+train_df = pd.read_csv("src/objects/train_df.csv")
 
 # Define binary features
 binary_features = ['Diabetes_binary', 'HighBP', 'HighChol', 'CholCheck', 'Smoker', 
@@ -24,7 +24,11 @@ validation_9 = (
 
 # Check if validation passed and save data validation results
 if validation_9.all_passed():
-    pd.DataFrame({'result': ['PASS']}).to_csv('objects/pass_data_validation9.txt', index=False)
+    pd.DataFrame({"result": ["PASS"]}).to_csv(
+        "src/objects/pass_data_validation9.txt", index=False
+    )
 else:
-    pd.DataFrame({'result': ['FAILED']}).to_csv('objects/failed_data_validation9.txt', index=False)
+    pd.DataFrame({"result": ["FAILED"]}).to_csv(
+        "src/objects/failed_data_validation9.txt", index=False
+    )
     print("Warning: Incorrect category levels detected")

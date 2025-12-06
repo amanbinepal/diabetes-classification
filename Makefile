@@ -62,7 +62,7 @@ docker-build-local: ## Build single-arch image for local testing (current platfo
 
 .PHONY: pipeline fetch validate
 
-pipeline: fetch validate eda ## Run full pipeline
+pipeline: fetch validate eda model ## Run full pipeline
 
 fetch: ## Run scripts for fetching and splitting data
 	python src/01_fetch_data.py

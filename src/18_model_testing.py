@@ -25,15 +25,15 @@ from great_tables import GT
     help="Response test dataset CSV file",
 )
 def model_testing(x_test, y_test, out_dir="results/models"):
-    """This function cross validates.
-        1. number of record bar chart by classes ("plot_class.png")
-        2. numeric features' boxplot by classes ("plot_numeric_box.png")
-        3. binary features' bar chart by classes ("plot_binary_bar.png")
-        4. ordinal features' bar chart by classes ("plot_ordinal_bar.png")
+    """This function tests our models.
+        1. Imports trained models
+        2. Make predictions on X_test data
+        3. Creates accuracy score table to "model_testing.png"
 
     Args:
-        test_file (string): the path to the test data set Defaults to "objects/test_df.csv".
-        out_dir (str, optional): the folder to save the plots. Defaults to "../results/figures".
+        x_test (string): the path to the x_test data set Defaults to "src/objects/X_test.csv".
+        y_test (string): the path to the y_test data set Defaults to "src/objects/y_test.csv".
+        out_dir (str, optional): the folder to save the plots. Defaults to "results/models".
     """
 
     # ============================ read in test data

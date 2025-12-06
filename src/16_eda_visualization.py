@@ -3,9 +3,12 @@ import pandas as pd
 import altair as alt
 import os
 
+
 @click.command()
-@click.option('--train-file', default='objects/train_df.csv', help='Training dataset CSV file')
-def data_visualization(train_file, out_dir="../results/figures"): 
+@click.option(
+    "--train-file", default="src/objects/train_df.csv", help="Training dataset CSV file"
+)
+def data_visualization(train_file, out_dir="results/figures"): 
     """This function generates 4 plots that are used for EDA data visualization. 
         1. number of record bar chart by classes ("plot_class.png")
         2. numeric features' boxplot by classes ("plot_numeric_box.png")
@@ -86,6 +89,8 @@ def data_visualization(train_file, out_dir="../results/figures"):
     )
 
     chart_ordinal_bar.save(os.path.join(out_dir, 'plot_ordinal_bar.png'), scale_factor=2.0)
+
+    click.echo('EDA figures created')
 
 
 if __name__ == "__main__":

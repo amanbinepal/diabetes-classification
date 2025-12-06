@@ -2,8 +2,10 @@ import pandas as pd
 import pointblank as pb
 
 # Read in the CSV files - from split_data.py script output and raw data
-train_df = pd.read_csv('objects/train_df.csv')
-original_data = pd.read_csv('objects/diabetes_binary_health_indicators_BRFSS2015.csv') 
+train_df = pd.read_csv("src/objects/train_df.csv")
+original_data = pd.read_csv(
+    "src/objects/diabetes_binary_health_indicators_BRFSS2015.csv"
+)
 
 # Data Validation - Check row count (80% split)
 rows, cols = original_data.shape
@@ -17,6 +19,10 @@ validation_1_2 = (
 
 # Check if validation passed and save data validation results
 if validation_1_2.all_passed():
-    pd.DataFrame({'result': ['PASS']}).to_csv('objects/pass_data_validation1_2.txt', index=False)
+    pd.DataFrame({"result": ["PASS"]}).to_csv(
+        "src/objects/pass_data_validation1_2.txt", index=False
+    )
 else:
-    pd.DataFrame({'result': ['FAILED']}).to_csv('objects/failed_data_validation1_2.txt', index=False)
+    pd.DataFrame({"result": ["FAILED"]}).to_csv(
+        "src/objects/failed_data_validation1_2.txt", index=False
+    )
