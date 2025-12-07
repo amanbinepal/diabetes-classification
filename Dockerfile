@@ -4,6 +4,9 @@ FROM condaforge/miniforge3:25.11.0-0
 # copy the lockfile into the container
 COPY conda-lock.yml conda-lock.yml
 
+# install make
+RUN conda install -n base -c conda-forge make -y
+
 # setup conda-lock
 RUN conda install -n base -c conda-forge conda-lock -y
 
