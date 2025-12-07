@@ -116,15 +116,209 @@ Figure&nbsp;1: Accuracy of Logistic Regression and Linear SVC Model
 <h3 class="anchored" data-anchor-id="research-question">Research Question</h3>
 <p>Can we use health indicators and lifestyle factors from the CDC’s Behavioral Risk Factor Surveillance System (BRFSS) survey to accurately predict whether an individual has diabetes?</p>
 <p>We are looking to:<br>
-1. Build and evaluate classification models that predict diabetes status based on 21 health and lifestyle features.<br>
+1. Build and evaluate classification models that predict diabetes status based on 21 21 health and lifestyle features.<br>
 2. Compare the performance and efficiency of logistic regression and support vector machine (SVM) classifiers.<br>
 3. Assess whether survey-based features can provide sufficiently accurate predictions for practical screening applications.</p>
 </section>
 </section>
 <section id="methods-results" class="level2">
 <h2 class="anchored" data-anchor-id="methods-results">Methods &amp; Results</h2>
-<p>This analysis uses the diabetes_binary_health_indicators_BRFSS2015.csv dataset, a cleaned and preprocessed version of the CDC’s 2015 Behavioral Risk Factor Surveillance System (BRFSS) survey data, made available by Alex Teboul on Kaggle (Teboul, 2020).</p>
-<p>For this analysis, we split the dataset into training (80%) and testing (20%) sets using a fixed random state (522) to ensure reproducibility. We implemented two classification algorithms:</p>
+<p>This analysis uses the diabetes_binary_health_indicators_BRFSS2015.csv dataset <a href="#tbl-df" class="quarto-xref">Table&nbsp;1</a>, a cleaned and preprocessed version of the CDC’s 2015 Behavioral Risk Factor Surveillance System (BRFSS) survey data, made available by Alex Teboul on Kaggle (Teboul, 2020).</p>
+<div class="cell" data-execution_count="3">
+<div id="tbl-df" class="cell quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="3">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-df-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;1: Diabetes Data with Health Indicators and Lifestyle Factors
+</figcaption>
+<div aria-describedby="tbl-df-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output cell-output-display cell-output-markdown" data-execution_count="11">
+<table class="do-not-create-environment cell caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 2%">
+<col style="width: 6%">
+<col style="width: 3%">
+<col style="width: 4%">
+<col style="width: 4%">
+<col style="width: 2%">
+<col style="width: 3%">
+<col style="width: 3%">
+<col style="width: 8%">
+<col style="width: 5%">
+<col style="width: 3%">
+<col style="width: 3%">
+<col style="width: 7%">
+<col style="width: 5%">
+<col style="width: 5%">
+<col style="width: 3%">
+<col style="width: 4%">
+<col style="width: 4%">
+<col style="width: 4%">
+<col style="width: 2%">
+<col style="width: 2%">
+<col style="width: 4%">
+<col style="width: 3%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: right;">ID</th>
+<th style="text-align: right;">Diabetes_binary</th>
+<th style="text-align: right;">HighBP</th>
+<th style="text-align: right;">HighChol</th>
+<th style="text-align: right;">CholCheck</th>
+<th style="text-align: right;">BMI</th>
+<th style="text-align: right;">Smoker</th>
+<th style="text-align: right;">Stroke</th>
+<th style="text-align: right;">HeartDiseaseorAttack</th>
+<th style="text-align: right;">PhysActivity</th>
+<th style="text-align: right;">Fruits</th>
+<th style="text-align: right;">Veggies</th>
+<th style="text-align: right;">HvyAlcoholConsump</th>
+<th style="text-align: right;">AnyHealthcare</th>
+<th style="text-align: right;">NoDocbcCost</th>
+<th style="text-align: right;">GenHlth</th>
+<th style="text-align: right;">MentHlth</th>
+<th style="text-align: right;">PhysHlth</th>
+<th style="text-align: right;">DiffWalk</th>
+<th style="text-align: right;">Sex</th>
+<th style="text-align: right;">Age</th>
+<th style="text-align: right;">Education</th>
+<th style="text-align: right;">Income</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">180125</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">29</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">7</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">49393</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">26</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">8</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">86115</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">27</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">5</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">249968</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">27</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">196362</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">28</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">8</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<p>For this analysis, we split the dataset into training 80% and testing 20% sets using a fixed random state (522) to ensure reproducibility. We implemented two classification algorithms:</p>
 <ol type="1">
 <li>Logistic Regression: A linear model appropriate for binary classification that estimates the probability of diabetes based on a linear combination of features.</li>
 <li>Linear Support Vector Classifier (SVC): A classifier that finds an optimal hyperplane to separate diabetic from non-diabetic individuals.</li>

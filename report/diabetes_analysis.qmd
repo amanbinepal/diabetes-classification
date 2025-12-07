@@ -19,11 +19,24 @@ editor: source
 
 
 ```{python}
+import pandas as pd
 import pickle
+from IPython.display import Markdown, display
+from tabulate import tabulate
 ```
 
 ```{python}
+#| echo: false
 
+train_df = pd.read_csv("../src/objects/train_df.csv")
+test_df = pd.read_csv("../src/objects/test_df.csv")
+# =============================== to get the train, test %
+n_train = train_df.shape[0]
+n_test = test_df.shape[0]
+r_train = n_train / (n_train + n_test)
+r_test = 1 - r_train
+
+n_features = train_df.shape[1] - 2 # -2 for ID column and target
 ```
 
 Data Reference: https://archive.ics.uci.edu/dataset/891/cdc+diabetes+health+indicators
@@ -44,15 +57,25 @@ Diabetes is a chronic disease that prevents the body from properly controlling b
 Can we use health indicators and lifestyle factors from the CDC's Behavioral Risk Factor Surveillance System (BRFSS) survey to accurately predict whether an individual has diabetes?
 
 We are looking to:  
-1. Build and evaluate classification models that predict diabetes status based on 21 health and lifestyle features.  
+1. Build and evaluate classification models that predict diabetes status based on `{python} n_features` health and lifestyle features.  
 2. Compare the performance and efficiency of logistic regression and support vector machine (SVM) classifiers.  
 3. Assess whether survey-based features can provide sufficiently accurate predictions for practical screening applications.  
 
+
 ## Methods & Results
 
-This analysis uses the diabetes_binary_health_indicators_BRFSS2015.csv dataset, a cleaned and preprocessed version of the CDC's 2015 Behavioral Risk Factor Surveillance System (BRFSS) survey data, made available by Alex Teboul on Kaggle (Teboul, 2020).
+This analysis uses the diabetes_binary_health_indicators_BRFSS2015.csv dataset @tbl-df, a cleaned and preprocessed version of the CDC's 2015 Behavioral Risk Factor Surveillance System (BRFSS) survey data, made available by Alex Teboul on Kaggle (Teboul, 2020).
 
-For this analysis, we split the dataset into training (80%) and testing (20%) sets using a fixed random state (522) to ensure reproducibility. We implemented two classification algorithms:
+```{python}
+#| label: tbl-df
+#| tbl-cap: Diabetes Data with Health Indicators and Lifestyle Factors
+#| echo: false
+
+# =============================== for presenting table.head
+Markdown(train_df.head().to_markdown(index = False))
+```
+
+For this analysis, we split the dataset into training `{python} str(round(r_train * 100)) + "%"` and testing `{python} str(round(r_test * 100)) + "%"` sets using a fixed random state (522) to ensure reproducibility. We implemented two classification algorithms:
 
 1. Logistic Regression: A linear model appropriate for binary classification that estimates the probability of diabetes based on a linear combination of features.
 2. Linear Support Vector Classifier (SVC): A classifier that finds an optimal hyperplane to separate diabetic from non-diabetic individuals.
