@@ -102,6 +102,8 @@ def model_training(x_train, y_train, out_dir="results/models"):
     }
 
     results_table = pd.DataFrame(results)
+    # Also output as csv for score readin from quarto 
+    results_table.to_csv(os.path.join(out_dir, "model_training"), index=False)
 
     # ============================ Export Great Table
     # Ian Gault: used ChatGPT5 to help introduce me to great_table package
