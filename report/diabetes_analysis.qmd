@@ -21,6 +21,7 @@ editor: source
 
 ```{python}
 import pandas as pd
+import numpy as np
 import pickle
 from IPython.display import Markdown, display
 from tabulate import tabulate
@@ -28,7 +29,6 @@ from tabulate import tabulate
 
 ```{python}
 #| echo: false
-
 train_df = pd.read_csv("../src/objects/train_df.csv")
 test_df = pd.read_csv("../src/objects/test_df.csv")
 # =============================== to get the train, test %
@@ -40,11 +40,16 @@ r_test = 1 - r_train
 n_features = train_df.shape[1] - 2 # -2 for ID column and target
 ```
 
-Data Reference: https://archive.ics.uci.edu/dataset/891/cdc+diabetes+health+indicators
+```{python}
+#| echo: false
+train_score = pd.read_csv("../results/models/model_training.csv")
+test_score = pd.read_csv("../results/models/model_testing.csv")
+```
+
 
 ## Summary
 
-This project attempts to predict diabetes status using the Logistic Regression and LinearSVC models, against a baseline DummyClassifier on an imbalanced dataset. All models achieved similar accuracy on the test set (approximately 0.86), which highlights a key issue: accuracy alone is not a reliable performance metric (see @fig-model_testing).
+This project attempts to predict diabetes status using the Logistic Regression and LinearSVC models, against a baseline DummyClassifier on an imbalanced dataset. All models achieved similar accuracy on the test set (approximately `{python} round(np.mean(test_score),2)`), which highlights a key issue: accuracy alone is not a reliable performance metric (see @fig-model_testing).
 
 ![Accuracy of Logistic Regression and Linear SVC Model](../results/models/model_testing.png){#fig-model_testing width=60%}
 
@@ -65,8 +70,7 @@ We are looking to:
 
 ## Methods & Results
 
-This analysis uses the diabetes_binary_health_indicators_BRFSS2015.csv dataset @tbl-df, a cleaned and preprocessed version of the CDC's 2015 Behavioral Risk Factor Surveillance System (BRFSS) survey data, made available by Alex Teboul on Kaggle (Teboul, 2020).
-This analysis uses the diabetes_binary_health_indicators_BRFSS2015.csv dataset, a cleaned and preprocessed version of the CDC's 2015 Behavioral Risk Factor Surveillance System [@CDC2015BRFSS] survey data, made available by Alex Teboul on Kaggle [@Teboul2020].
+This analysis uses the diabetes_binary_health_indicators_BRFSS2015.csv dataset @tbl-df, a cleaned and preprocessed version of the CDC's 2015 Behavioral Risk Factor Surveillance System [@CDC2015BRFSS] survey data, made available by Alex Teboul on Kaggle [@Teboul2020].
 
 ```{python}
 #| label: tbl-df
@@ -84,7 +88,8 @@ For this analysis, we split the dataset into training `{python} str(round(r_trai
 
 Both models were implemented using scikit-learn pipelines that include feature standardization (StandardScaler) to normalize the numeric features to comparable scales. Binary categorical features were already processed in the dataset and were set to pass through the column transformer. We evaluated model performance using cross-validation on the training set and final accuracy assessment on the held-out test set.
 
-Our results show that both models achieve approximately 86% accuracy, with logistic regression demonstrating slightly faster training time.
+Our results show that both models achieve approximately `{python} str(round(np.mean(train_score.iloc[-2,1:]), 2) * 100) + "%"` accuracy, with logistic regression demonstrating slightly faster training time. 
+
 
 ## Discussion
 
@@ -106,7 +111,7 @@ Other binary health and lifestyle factors—such as high blood pressure, smoking
 Together, these patterns suggest that several features are related to diabetes status, but the dominance of the majority class may obscure these relationships when evaluating model performance.
 
 
-The baseline DummyClassifier achieves an accuracy score of about 0.86, derived from assigning the most frequent class (non-diabetic) to all patients. This highlights how approximatey 86% of the dataset is non-diabetic. Both Logistic Regression and LinearSVC achieve similar accuracy (approximately 0.86) with little to no improvement (see @fig-model_training).
+The baseline DummyClassifier achieves an accuracy score of about `{python} round(train_score.iloc[-2,1],2)`, derived from assigning the most frequent class (non-diabetic) to all patients. This highlights how approximatey `{python} str(round(train_score.iloc[-2,1],2) * 100) + "%"` of the dataset is non-diabetic. Both Logistic Regression and LinearSVC achieve similar accuracy (approximately `{python} round(np.mean(train_score.iloc[-2,2:]), 2)`) with little to no improvement (see @fig-model_training).
 
 ![Cross Validation Results of Candidate Models](../results/models/model_training.png){#fig-model_training width=60%}
 

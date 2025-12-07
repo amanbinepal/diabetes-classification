@@ -22,7 +22,27 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="diabetes_analysis_files/libs/clipboard/clipboard.min.js"></script>
@@ -93,7 +113,6 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>Data Reference: https://archive.ics.uci.edu/dataset/891/cdc+diabetes+health+indicators</p>
 <section id="summary" class="level2">
 <h2 class="anchored" data-anchor-id="summary">Summary</h2>
 <p>This project attempts to predict diabetes status using the Logistic Regression and LinearSVC models, against a baseline DummyClassifier on an imbalanced dataset. All models achieved similar accuracy on the test set (approximately 0.86), which highlights a key issue: accuracy alone is not a reliable performance metric (see <a href="#fig-model_testing" class="quarto-xref">Figure&nbsp;1</a>).</p>
@@ -111,10 +130,10 @@ Figure&nbsp;1: Accuracy of Logistic Regression and Linear SVC Model
 </section>
 <section id="introduction" class="level2">
 <h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
-<p>Diabetes is a chronic disease that prevents the body from properly controlling blood sugar levels, which can lead to serious health problems including heart disease, vision loss, kidney disease, and limb amputation (Teboul, 2020). Given the severity of the disease, early detection can allow people to make lifestyle changes and receive treatment that can slow disease progression. We believe that machine learning models using survey data can offer a promising way to create accessible, cost-effective screening tools to identify high-risk individuals and support public health efforts.</p>
+<p>Diabetes is a chronic disease that prevents the body from properly controlling blood sugar levels, which can lead to serious health problems including heart disease, vision loss, kidney disease, and limb amputation <span class="citation" data-cites="Teboul2020">(<a href="#ref-Teboul2020" role="doc-biblioref">Teboul 2020</a>)</span>. Given the severity of the disease, early detection can allow people to make lifestyle changes and receive treatment that can slow disease progression. We believe that machine learning models using survey data can offer a promising way to create accessible, cost-effective screening tools to identify high-risk individuals and support public health efforts.</p>
 <section id="research-question" class="level3">
 <h3 class="anchored" data-anchor-id="research-question">Research Question</h3>
-<p>Can we use health indicators and lifestyle factors from the CDC’s Behavioral Risk Factor Surveillance System (BRFSS) survey to accurately predict whether an individual has diabetes?</p>
+<p>Can we use health indicators and lifestyle factors from the CDC’s Behavioral Risk Factor Surveillance System <span class="citation" data-cites="CDC2015BRFSS">(<a href="#ref-CDC2015BRFSS" role="doc-biblioref">Centers for Disease Control and Prevention 2015</a>)</span> survey to accurately predict whether an individual has diabetes?</p>
 <p>We are looking to:<br>
 1. Build and evaluate classification models that predict diabetes status based on 21 health and lifestyle features.<br>
 2. Compare the performance and efficiency of logistic regression and support vector machine (SVM) classifiers.<br>
@@ -123,15 +142,15 @@ Figure&nbsp;1: Accuracy of Logistic Regression and Linear SVC Model
 </section>
 <section id="methods-results" class="level2">
 <h2 class="anchored" data-anchor-id="methods-results">Methods &amp; Results</h2>
-<p>This analysis uses the diabetes_binary_health_indicators_BRFSS2015.csv dataset <a href="#tbl-df" class="quarto-xref">Table&nbsp;1</a>, a cleaned and preprocessed version of the CDC’s 2015 Behavioral Risk Factor Surveillance System (BRFSS) survey data, made available by Alex Teboul on Kaggle (Teboul, 2020).</p>
-<div class="cell" data-execution_count="3">
-<div id="tbl-df" class="cell quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="3">
+<p>This analysis uses the diabetes_binary_health_indicators_BRFSS2015.csv dataset <a href="#tbl-df" class="quarto-xref">Table&nbsp;1</a>, a cleaned and preprocessed version of the CDC’s 2015 Behavioral Risk Factor Surveillance System <span class="citation" data-cites="CDC2015BRFSS">(<a href="#ref-CDC2015BRFSS" role="doc-biblioref">Centers for Disease Control and Prevention 2015</a>)</span> survey data, made available by Alex Teboul on Kaggle <span class="citation" data-cites="Teboul2020">(<a href="#ref-Teboul2020" role="doc-biblioref">Teboul 2020</a>)</span>.</p>
+<div class="cell" data-execution_count="4">
+<div id="tbl-df" class="cell quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="4">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-df-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Table&nbsp;1: Diabetes Data with Health Indicators and Lifestyle Factors
 </figcaption>
 <div aria-describedby="tbl-df-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div class="cell-output cell-output-display cell-output-markdown" data-execution_count="18">
+<div class="cell-output cell-output-display cell-output-markdown" data-execution_count="33">
 <table class="do-not-create-environment cell caption-top table table-sm table-striped small">
 <colgroup>
 <col style="width: 2%">
@@ -324,7 +343,7 @@ Table&nbsp;1: Diabetes Data with Health Indicators and Lifestyle Factors
 <li>Linear Support Vector Classifier (SVC): A classifier that finds an optimal hyperplane to separate diabetic from non-diabetic individuals.</li>
 </ol>
 <p>Both models were implemented using scikit-learn pipelines that include feature standardization (StandardScaler) to normalize the numeric features to comparable scales. Binary categorical features were already processed in the dataset and were set to pass through the column transformer. We evaluated model performance using cross-validation on the training set and final accuracy assessment on the held-out test set.</p>
-<p>Our results show that both models achieve approximately 86% accuracy, with logistic regression demonstrating slightly faster training time.</p>
+<p>Our results show that both models achieve approximately 86.0% accuracy, with logistic regression demonstrating slightly faster training time.</p>
 </section>
 <section id="discussion" class="level2">
 <h2 class="anchored" data-anchor-id="discussion">Discussion</h2>
@@ -372,7 +391,7 @@ Figure&nbsp;5: Binary Features by Class
 </figure>
 </div>
 <p>Together, these patterns suggest that several features are related to diabetes status, but the dominance of the majority class may obscure these relationships when evaluating model performance.</p>
-<p>The baseline DummyClassifier achieves an accuracy score of about 0.86, derived from assigning the most frequent class (non-diabetic) to all patients. This highlights how approximatey 86% of the dataset is non-diabetic. Both Logistic Regression and LinearSVC achieve similar accuracy (approximately 0.86) with little to no improvement (see <a href="#fig-model_training" class="quarto-xref">Figure&nbsp;6</a>).</p>
+<p>The baseline DummyClassifier achieves an accuracy score of about 0.86, derived from assigning the most frequent class (non-diabetic) to all patients. This highlights how approximatey 86.0% of the dataset is non-diabetic. Both Logistic Regression and LinearSVC achieve similar accuracy (approximately 0.86) with little to no improvement (see <a href="#fig-model_training" class="quarto-xref">Figure&nbsp;6</a>).</p>
 <div id="fig-model_training" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-model_training-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -387,11 +406,19 @@ Figure&nbsp;6: Cross Validation Results of Candidate Models
 <p>The similarity in test scores is an unexpected finding. With a clean dataset containing informative and diverse features, we would expect the classification models to perform at least better than the dummy classifier. Additionally, initial hyperparameter tuning for logistic regression did not affect accuracy (data not shown). This finding highlights the importance of understanding the data through EDA to interpret where accuracy scores come from.</p>
 <p>This suggests the next step for deeper EDA, including distributions, to see whether features overlap and whether the model can separate them effectively. Other future questions would be determining which features are most important for classifying an individual as diabetic or not, evaluating the probability estimates, and assessing whether all features are truly helpful for drawing conclusions.</p>
 </section>
-<section id="references" class="level2">
-<h2 class="anchored" data-anchor-id="references">References</h2>
+<section id="references" class="level2 unnumbered">
+
+
 </section>
 
-</main>
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-CDC2015BRFSS" class="csl-entry" role="listitem">
+Centers for Disease Control and Prevention. 2015. <span>“<span class="nocase">Behavioral Risk Factor Surveillance System: 2015 Survey Data and Documentation</span>.”</span> U.S. Department of Health and Human Services, Centers for Disease Control and Prevention. <a href="https://www.cdc.gov/brfss/annual_data/annual_2015.html">https://www.cdc.gov/brfss/annual_data/annual_2015.html</a>.
+</div>
+<div id="ref-Teboul2020" class="csl-entry" role="listitem">
+Teboul, Alex. 2020. <span>“<span>CDC Diabetes Health Indicators</span>.”</span> UCI Machine Learning Repository. <a href="https://archive.ics.uci.edu/dataset/891/cdc+diabetes+health+indicators">https://archive.ics.uci.edu/dataset/891/cdc+diabetes+health+indicators</a>.
+</div>
+</div></section></div></main>
 <!-- /main column -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
