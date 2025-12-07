@@ -86,6 +86,81 @@ jupyter lab
 6. Under Switch Kernel, make sure that Python [conda env:522-project] is selected.
 
 7. Under the Kernel menu click Restart Kernel and Run All Cells... to execute analysis and generate the final report.
+
+### Analysis Pipeline - Running Commands from Terminal
+
+These commands will allow the user to run through each section of the analysis in chunks or all at once. This will re-create the ouputs of our analysis, which feeds into the `diabetes_analysis.qmd`. 
+
+From the command terminal, `cd` into the root of the `diabetes-classification` repo, which has been cloned onto your local machine.  
+
+To run an individual script from the command line:  
+
+``` bash
+python src/example_script_title.py
+```
+
+Alternatively, the following `make` commands can run the scripts in batches or all at once, as shown below. Descriptions of each script are annotated in the individual files.
+
+1. Run scripts for fetching and splitting the data
+
+This will run the following scripts:
+
+``` bash
+make fetch
+```
+
+- src/01_fetch_data.py
+- src/02_split_data.py
+- src/03_train_set.py
+- src/04_test_set.py
+
+2. Run scripts for data validation
+
+``` bash
+make validate
+```
+
+This will run the following scripts:
+
+- src/05_data_validation1_1.py
+- src/06_data_validation1_2.py
+- src/07_data_validation2.py
+- src/08_data_validation3.py
+- src/09_data_validation4.py
+- src/10_data_validation5.py
+- src/11_data_validation6.py
+- src/12_data_validation7.py
+- src/13_data_validation8.py
+- src/14_data_validation9.py
+- src/15_data_validation10.py
+
+3. Run script for EDA
+
+This will run the following script:
+
+``` bash
+make eda
+```
+
+- src/16_eda_visualization.py
+
+3. Run scripts for model training and testing
+
+This will run the following scripts:
+
+``` bash
+make model
+```
+
+- src/17_model_validation_training.py
+- src/18_model_testing.py
+
+4. Or, run through the full pipeline all at once
+
+``` bash
+make pipeline
+```
+
 ## Dependencies
 
 ### Tools Used
@@ -97,6 +172,7 @@ jupyter lab
 ### Conda Dependencies
 
 - python=3.11.14
+- numpy=1.26.4
 - ipykernel=7.1.0
 - pandas=2.3.3
 - scikit-learn=1.7.2
@@ -107,6 +183,7 @@ jupyter lab
 - jupyterlab=4.5.0
 - click=8.1.7
 - quarto=1.8.26
+- ipython=9.0.0
 
 ### Pip Dependencies
 
@@ -115,7 +192,7 @@ jupyter lab
 - deepchecks==0.19.1
 - anywidget==0.9.21
 - ipywidgets==8.1.8
-- great-tables[extra]==0.20.0
+- tabulate==0.9.0
 
 Python and all packages listed above are specified in environment.yml
 
