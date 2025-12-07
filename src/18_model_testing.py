@@ -11,7 +11,7 @@ from sklearn.svm import LinearSVC
 
 from sklearn.metrics import accuracy_score
 
-from great_tables import GT
+# from great_tables import GT
 
 @click.command()
 @click.option(
@@ -62,16 +62,16 @@ def model_testing(x_test, y_test, out_dir="results/models"):
     test_results.to_csv(os.path.join(out_dir, "model_testing.csv"), index=False)
 
     # ============================ Export Great Table
-    great_table2 = (
-        GT(test_results.rename(columns={"index": "Metric"}))
-        .tab_header(
-            title="Accuracy Score on Test Set for Candidate Models"
-        )
-        .fmt_number(columns=["Logistic Regression", "Linear SVC"], decimals=4)
-        .opt_stylize(style=3, color="blue")
-    )
+    # great_table2 = (
+    #     GT(test_results.rename(columns={"index": "Metric"}))
+    #     .tab_header(
+    #         title="Accuracy Score on Test Set for Candidate Models"
+    #     )
+    #     .fmt_number(columns=["Logistic Regression", "Linear SVC"], decimals=4)
+    #     .opt_stylize(style=3, color="blue")
+    # )
 
-    great_table2.save(os.path.join(out_dir, "model_testing"), scale=2)
+    # great_table2.save(os.path.join(out_dir, "model_testing.html"), scale=2)
 
     # ============================ Export Models
 

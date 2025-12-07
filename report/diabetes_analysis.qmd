@@ -49,9 +49,17 @@ test_score = pd.read_csv("../results/models/model_testing.csv")
 
 ## Summary
 
-This project attempts to predict diabetes status using the Logistic Regression and LinearSVC models, against a baseline DummyClassifier on an imbalanced dataset. All models achieved similar accuracy on the test set (approximately `{python} round(np.mean(test_score),2)`), which highlights a key issue: accuracy alone is not a reliable performance metric (see @fig-model_testing).
+This project attempts to predict diabetes status using the Logistic Regression and LinearSVC models, against a baseline DummyClassifier on an imbalanced dataset. All models achieved similar accuracy on the test set (approximately `{python} round(np.mean(test_score),2)`), which highlights a key issue: accuracy alone is not a reliable performance metric (see @tbl-testing).
 
-![Accuracy of Logistic Regression and Linear SVC Model](../results/models/model_testing.png){#fig-model_testing width=60%}
+<!-- ![Accuracy of Logistic Regression and Linear SVC Model](../results/models/model_testing.png){#fig-model_testing width=60%} -->
+```{python}
+# | label: tbl-testing
+# | tbl-cap: Accuracy of Logistic Regression and Linear SVC Model
+# | echo: false
+
+# =============================== for presenting table.head
+Markdown(test_score.head().to_markdown(index=False))
+```
 
 These findings motivate deeper exploratory data analysis, evaluation with additional metrics (precision, recall, F1), and exploration of alternative models and threshold tuning to get a more robust assessment of the model's predictability. 
 
@@ -111,9 +119,18 @@ Other binary health and lifestyle factors—such as high blood pressure, smoking
 Together, these patterns suggest that several features are related to diabetes status, but the dominance of the majority class may obscure these relationships when evaluating model performance.
 
 
-The baseline DummyClassifier achieves an accuracy score of about `{python} round(train_score.iloc[-2,1],2)`, derived from assigning the most frequent class (non-diabetic) to all patients. This highlights how approximatey `{python} str(round(train_score.iloc[-2,1],2) * 100) + "%"` of the dataset is non-diabetic. Both Logistic Regression and LinearSVC achieve similar accuracy (approximately `{python} round(np.mean(train_score.iloc[-2,2:]), 2)`) with little to no improvement (see @fig-model_training).
+The baseline DummyClassifier achieves an accuracy score of about `{python} round(train_score.iloc[-2,1],2)`, derived from assigning the most frequent class (non-diabetic) to all patients. This highlights how approximatey `{python} str(round(train_score.iloc[-2,1],2) * 100) + "%"` of the dataset is non-diabetic. Both Logistic Regression and LinearSVC achieve similar accuracy (approximately `{python} round(np.mean(train_score.iloc[-2,2:]), 2)`) with little to no improvement (see @tbl-training).
 
-![Cross Validation Results of Candidate Models](../results/models/model_training.png){#fig-model_training width=60%}
+<!-- ![Cross Validation Results of Candidate Models](../results/models/model_training.png){#fig-model_training width=60%} -->
+
+```{python}
+# | label: tbl-training
+# | tbl-cap: Cross Validation Results of Candidate Models
+# | echo: false
+
+# =============================== for presenting table.head
+Markdown(train_score.head().to_markdown(index=False))
+```
 
 
 As revealed from the exploratory data analysis, the class imbalanced problem may affect the models’ reliability. Therefore, more analysis is needed to explore additional models, check class balance with metrics such as precision and recall, examine confusion matrices, and test different data splits or tune hyperparameters to determine if performance is stable across scenarios before drawing strong conclusions. 
