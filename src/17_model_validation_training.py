@@ -11,7 +11,7 @@ from sklearn.dummy import DummyClassifier
 from sklearn.linear_model import LogisticRegression
 from sklearn.svm import LinearSVC
 
-from great_tables import GT
+# from great_tables import GT
 
 
 @click.command()
@@ -104,21 +104,21 @@ def model_training(x_train, y_train, out_dir="results/models"):
 
     results_table = pd.DataFrame(results)
     # Also output as csv for score readin from quarto 
-    results_table.to_csv(os.path.join(out_dir, "model_training.csv"), index=False)
+    results_table.to_csv(os.path.join(out_dir, "model_training.csv"), index=True)
 
     # ============================ Export Great Table
     # Ian Gault: used ChatGPT5 to help introduce me to great_table package
-    great_table = (
-        GT(results_table.rename(columns={"index": "Metrics"}))
-        .tab_header(
-            title="Comparison of Candidate Models to DummyClassifier",
-            subtitle="Mean Cross-Validation Scores (CV=5)",
-        )
-        .fmt_number(columns=["Dummy", "Logistic Regression", "Linear SVC"], decimals=4)
-        .opt_stylize(style=3, color="blue")
-    )
+    # great_table = (
+    #     GT(results_table.rename(columns={"index": "Metrics"}))
+    #     .tab_header(
+    #         title="Comparison of Candidate Models to DummyClassifier",
+    #         subtitle="Mean Cross-Validation Scores (CV=5)",
+    #     )
+    #     .fmt_number(columns=["Dummy", "Logistic Regression", "Linear SVC"], decimals=4)
+    #     .opt_stylize(style=3, color="blue")
+    # )
 
-    great_table.save(os.path.join(out_dir, "model_training"), scale=2)
+    # great_table.save(os.path.join(out_dir, "model_training.html"), scale=2)
 
     # ============================ Fit Models
 
