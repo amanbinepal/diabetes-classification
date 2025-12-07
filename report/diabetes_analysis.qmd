@@ -45,7 +45,7 @@ Data Reference: https://archive.ics.uci.edu/dataset/891/cdc+diabetes+health+indi
 
 This project attempts to predict diabetes status using the Logistic Regression and LinearSVC models, against a baseline DummyClassifier on an imbalanced dataset. All models achieved similar accuracy on the test set (approximately 0.86), which highlights a key issue: accuracy alone is not a reliable performance metric (see @fig-model_testing).
 
-![Accuracy of Logistic Regression and Linear SVC Model](../results/models/model_testing.png){#fig-model_testing}
+![Accuracy of Logistic Regression and Linear SVC Model](../results/models/model_testing.png){#fig-model_testing width=60%}
 
 These findings motivate deeper exploratory data analysis, evaluation with additional metrics (precision, recall, F1), and exploration of alternative models and threshold tuning to get a more robust assessment of the model's predictability. 
 
@@ -90,7 +90,7 @@ The exploratory data analysis revealed several important patterns in the dataset
 
 ![Imbalanced Class Observations](../results/figures/plot_class.png){#fig-imb_class width=30%}
 
-![Ordinal Features Observations by Class](../results/figures/plot_ordinal_bar.png){#fig-ordinal_bar}
+![Ordinal Features Observations by Class](../results/figures/plot_ordinal_bar.png){#fig-ordinal_bar width=70%}
 
 
 Additionally, individuals with diabetes (diabetes_binary = 1) tend to have higher BMI values on average (see @fig-numeric_box). 
@@ -99,14 +99,14 @@ Additionally, individuals with diabetes (diabetes_binary = 1) tend to have highe
 
 Other binary health and lifestyle factors—such as high blood pressure, smoking status, and physical activity—also show clear differences between diabetic and non-diabetic groups (see @fig-binary_bar). 
 
-![Binary Features by Class](../results/figures/plot_binary_bar.png){#fig-binary_bar}
+![Binary Features by Class](../results/figures/plot_binary_bar.png){#fig-binary_bar width=80%}
 
 Together, these patterns suggest that several features are related to diabetes status, but the dominance of the majority class may obscure these relationships when evaluating model performance.
 
 
 The baseline DummyClassifier achieves an accuracy score of about 0.86, derived from assigning the most frequent class (non-diabetic) to all patients. This highlights how approximatey 86% of the dataset is non-diabetic. Both Logistic Regression and LinearSVC achieve similar accuracy (approximately 0.86) with little to no improvement (see @fig-model_training).
 
-![Cross Validation Results of Candidate Models](../results/models/model_training.png){#fig-model_training}
+![Cross Validation Results of Candidate Models](../results/models/model_training.png){#fig-model_training width=60%}
 
 
 As revealed from the exploratory data analysis, the class imbalanced problem may affect the models’ reliability. Therefore, more analysis is needed to explore additional models, check class balance with metrics such as precision and recall, examine confusion matrices, and test different data splits or tune hyperparameters to determine if performance is stable across scenarios before drawing strong conclusions. 
