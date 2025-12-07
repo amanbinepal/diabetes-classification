@@ -96,6 +96,7 @@ def model_training(x_train, y_train, out_dir="results/models"):
 
     # ============================ Summary table
     results = {
+        "Index": scores_dummy.index,
         "Dummy": scores_dummy,
         "Logistic Regression": scores_logistic,
         "Linear SVC": scores_svc
@@ -103,7 +104,7 @@ def model_training(x_train, y_train, out_dir="results/models"):
 
     results_table = pd.DataFrame(results)
     # Also output as csv for score readin from quarto 
-    results_table.to_csv(os.path.join(out_dir, "model_training.csv"), index=False)
+    results_table.to_csv(os.path.join(out_dir, "model_training.csv"))
 
     # ============================ Export Great Table
     # Ian Gault: used ChatGPT5 to help introduce me to great_table package
