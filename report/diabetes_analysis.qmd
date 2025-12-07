@@ -11,6 +11,7 @@ format:
         toc: true
         toc-depth: 3
 
+bibliography: reference.bib
 execute:
   echo: false
   warning: false
@@ -51,10 +52,10 @@ These findings motivate deeper exploratory data analysis, evaluation with additi
 
 ## Introduction
 
-Diabetes is a chronic disease that prevents the body from properly controlling blood sugar levels, which can lead to serious health problems including heart disease, vision loss, kidney disease, and limb amputation (Teboul, 2020). Given the severity of the disease, early detection can allow people to make lifestyle changes and receive treatment that can slow disease progression. We believe that machine learning models using survey data can offer a promising way to create accessible, cost-effective screening tools to identify high-risk individuals and support public health efforts.
+Diabetes is a chronic disease that prevents the body from properly controlling blood sugar levels, which can lead to serious health problems including heart disease, vision loss, kidney disease, and limb amputation [@Teboul2020]. Given the severity of the disease, early detection can allow people to make lifestyle changes and receive treatment that can slow disease progression. We believe that machine learning models using survey data can offer a promising way to create accessible, cost-effective screening tools to identify high-risk individuals and support public health efforts.
 
 ### Research Question
-Can we use health indicators and lifestyle factors from the CDC's Behavioral Risk Factor Surveillance System (BRFSS) survey to accurately predict whether an individual has diabetes?
+Can we use health indicators and lifestyle factors from the CDC's Behavioral Risk Factor Surveillance System [@CDC2015BRFSS] survey to accurately predict whether an individual has diabetes?
 
 We are looking to:  
 1. Build and evaluate classification models that predict diabetes status based on `{python} n_features` health and lifestyle features.  
@@ -65,6 +66,7 @@ We are looking to:
 ## Methods & Results
 
 This analysis uses the diabetes_binary_health_indicators_BRFSS2015.csv dataset @tbl-df, a cleaned and preprocessed version of the CDC's 2015 Behavioral Risk Factor Surveillance System (BRFSS) survey data, made available by Alex Teboul on Kaggle (Teboul, 2020).
+This analysis uses the diabetes_binary_health_indicators_BRFSS2015.csv dataset, a cleaned and preprocessed version of the CDC's 2015 Behavioral Risk Factor Surveillance System [@CDC2015BRFSS] survey data, made available by Alex Teboul on Kaggle [@Teboul2020].
 
 ```{python}
 #| label: tbl-df

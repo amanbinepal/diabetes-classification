@@ -88,15 +88,36 @@ jupyter lab
 7. Under the Kernel menu click Restart Kernel and Run All Cells... to execute analysis and generate the final report.
 ## Dependencies
 
-conda 
+### Tools Used
 
-conda-lock
+- conda
+- conda-lock
+- nb_conda_kernels
 
-jupyterlab
+### Conda Dependencies
 
-nb_conda_kernels
+- python=3.11.14
+- ipykernel=7.1.0
+- pandas=2.3.3
+- scikit-learn=1.7.2
+- altair=6.0.0
+- vl-convert-python=1.8.0
+- pyarrow=22.0.0
+- ucimlrepo=0.0.7
+- jupyterlab=4.5.0
+- click=8.1.7
+- quarto=1.8.26
 
-Python and all packages listed in environment.yml
+### Pip Dependencies
+
+- vegafusion==2.0.3
+- pointblank==0.16.0
+- deepchecks==0.19.1
+- anywidget==0.9.21
+- ipywidgets==8.1.8
+- great-tables[extra]==0.20.0
+
+Python and all packages listed above are specified in environment.yml
 
 ## License
 
