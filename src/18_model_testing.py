@@ -59,7 +59,7 @@ def model_testing(x_test, y_test, out_dir="results/models"):
 
     test_results = pd.DataFrame([test_results], index=['Accuracy'])
     # Also output as csv for score readin from quarto 
-    test_results.to_csv(os.path.join(out_dir, "model_testing"), index=False)
+    test_results.to_csv(os.path.join(out_dir, "model_testing.csv"), index=False)
 
     # ============================ Export Great Table
     great_table2 = (
