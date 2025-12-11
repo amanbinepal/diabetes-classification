@@ -7,9 +7,6 @@ format:
     html:
         toc: true
         toc-depth: 3
-    pdf:
-        toc: true
-        toc-depth: 3
 
 bibliography: reference.bib
 execute:
