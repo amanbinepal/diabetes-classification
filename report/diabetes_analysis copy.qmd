@@ -46,7 +46,7 @@ test_score = pd.read_csv("../results/models/model_testing.csv")
 
 ## Summary
 
-This project attempts to predict diabetes status using the Logistic Regression and LinearSVC models, against a baseline DummyClassifier on an imbalanced dataset. All models achieved similar accuracy on the test set (approximately `{python} round(np.mean(test_score),2)`), which highlights a key issue: accuracy alone is not a reliable performance metric (see @tbl-testing).
+This project attempts to predict diabetes status using the Logistic Regression and LinearSVC models, against a baseline DummyClassifier on an imbalanced dataset. All models achieved similar accuracy on the test set (approximately `{python} round(test_score.iloc[0].mean(), 2)`), which highlights a key issue: accuracy alone is not a reliable performance metric (see @tbl-testing).
 
 <!-- ![Accuracy of Logistic Regression and Linear SVC Model](../results/models/model_testing.png){#fig-model_testing width=60%} -->
 ```{python}

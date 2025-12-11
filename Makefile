@@ -150,4 +150,5 @@ results/models/model_testing.csv: src/18_model_testing.py src/objects/X_test.csv
 	python src/18_model_testing.py
 
 # ================================== Dependency Track of  output
-report/diabetes_analysis.html: report/diabetes_analysis.qmd 
+report/diabetes_analysis.html: report/diabetes_analysis.qmd report/reference.bib src/objects/train_df.csv src/objects/test_df.csv results/models/model_training.csv results/models/model_testing.csv results/figures/plot_class.png results/figures/plot_ordinal_bar.png results/figures/plot_numeric_box.png results/figures/plot_binary_bar.png
+	quarto render report/diabetes_analysis.qmd
