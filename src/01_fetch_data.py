@@ -1,5 +1,5 @@
 # 01_fetch_data.py
-# Author: Your Name
+# Author: Vy Phan
 # Date: 2025-12-11
 
 # This script downloads the CDC Diabetes dataset from the UC Irvine Machine Learning Repository

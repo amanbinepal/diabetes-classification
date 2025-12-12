@@ -1,3 +1,12 @@
+# 03_split_train_features.py
+# Author: Vy Phan
+# Date: 2025-12-11
+
+# This script splits the training dataset into features (X_train) and target (y_train),
+# and saves them as separate CSV files in a specified directory.
+
+# Usage: python src/03_split_train_features.py --train-file=src/objects/train_df.csv --output-dir=src/objects
+
 import click
 import pandas as pd
 
