@@ -31,10 +31,6 @@ def read_model(out_dir):
 
     return lr_pipe, linear_svc_pipe
 
-    
-    
-
-
 def test_model(pipe, X_test, y_test):
     prediction = pipe.predict(X_test)
     accuracy = accuracy_score(y_test, prediction)
