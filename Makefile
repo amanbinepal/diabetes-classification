@@ -88,4 +88,4 @@ eda: ## Run EDA
 
 model: ## Run model training and testing
 	python src/17_model_validation_training.py
-	python src/18_model_testing.py
+	python src/model_testing.py
