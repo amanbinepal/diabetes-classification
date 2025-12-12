@@ -31,11 +31,7 @@ def read_model(out_dir):
 
     return lr_pipe, linear_svc_pipe
 
-    
-    
-
-
-def test_model(pipe, X_test, y_test):
+def evaluate_model(pipe, X_test, y_test):
     prediction = pipe.predict(X_test)
     accuracy = accuracy_score(y_test, prediction)
     return accuracy
@@ -85,8 +81,8 @@ def model_testing(x_test, y_test, out_dir="results/models"):
     #prediction_svc = linear_svc_pipe.predict(X_test)
     #accuracy_svc = accuracy_score(y_test, prediction_svc)
 
-    accuracy_lr = test_model(lr_pipe, X_test, y_test)
-    accuracy_svc = test_model(linear_svc_pipe, X_test, y_test)
+    accuracy_lr = evaluate_model(lr_pipe, X_test, y_test)
+    accuracy_svc = evaluate_model(linear_svc_pipe, X_test, y_test)
 
 
     # ============================ Make table

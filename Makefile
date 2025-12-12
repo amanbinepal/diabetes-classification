@@ -138,17 +138,4 @@ results/figures/plot_ordinal_bar.png: src/16_eda_visualization.py src/objects/tr
 # ================================== Dependency Track of 17_model_validation_training.py's output
 results/models/model_training.csv: src/17_model_validation_training.py src/objects/X_train.csv src/objects/y_train.csv
 	python src/17_model_validation_training.py
-
-results/models/trained_lr_pipe.pkl: src/17_model_validation_training.py src/objects/X_train.csv src/objects/y_train.csv
-	python src/17_model_validation_training.py
-
-results/models/trained_linear_svc_pipe.pkl: src/17_model_validation_training.py src/objects/X_train.csv src/objects/y_train.csv
-	python src/17_model_validation_training.py
-
-# ================================== Dependency Track of 18_model_testing.py's output
-results/models/model_testing.csv: src/18_model_testing.py src/objects/X_test.csv src/objects/y_test.csv
-	python src/18_model_testing.py
-
-# ================================== Dependency Track of  output
-report/diabetes_analysis.html: report/diabetes_analysis.qmd report/reference.bib src/objects/train_df.csv src/objects/test_df.csv results/models/model_training.csv results/models/model_testing.csv results/figures/plot_class.png results/figures/plot_ordinal_bar.png results/figures/plot_numeric_box.png results/figures/plot_binary_bar.png
-	quarto render report/diabetes_analysis.qmd
+	python src/model_testing.py
