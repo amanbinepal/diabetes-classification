@@ -3,7 +3,7 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 
 @click.command()
-@click.option('--input-file', default='src/objects/diabetes_binary_health_indicators_BRFSS2015.csv', help='Input CSV file')
+@click.option('--input-file', default='data/raw/diabetes_binary_health_indicators_BRFSS2015.csv', help='Input CSV file')
 
 def main(input_file):
     """Split data into train and test sets"""

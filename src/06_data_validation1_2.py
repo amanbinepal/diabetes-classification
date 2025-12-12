@@ -4,7 +4,7 @@ import pointblank as pb
 # Read in the CSV files - from split_data.py script output and raw data
 train_df = pd.read_csv("src/objects/train_df.csv")
 original_data = pd.read_csv(
-    "src/objects/diabetes_binary_health_indicators_BRFSS2015.csv"
+    "data/raw/diabetes_binary_health_indicators_BRFSS2015.csv"
 )
 
 # Data Validation - Check row count (80% split)
