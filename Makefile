@@ -139,12 +139,6 @@ results/figures/plot_ordinal_bar.png: src/16_eda_visualization.py src/objects/tr
 results/models/model_training.csv: src/17_model_validation_training.py src/objects/X_train.csv src/objects/y_train.csv
 	python src/17_model_validation_training.py
 
-results/models/trained_lr_pipe.pkl: src/17_model_validation_training.py src/objects/X_train.csv src/objects/y_train.csv
-	python src/17_model_validation_training.py
-
-results/models/trained_linear_svc_pipe.pkl: src/17_model_validation_training.py src/objects/X_train.csv src/objects/y_train.csv
-	python src/17_model_validation_training.py
-
 # ================================== Dependency Track of 18_model_testing.py's output
 results/models/model_testing.csv: src/18_model_testing.py src/objects/X_test.csv src/objects/y_test.csv
 	python src/18_model_testing.py
