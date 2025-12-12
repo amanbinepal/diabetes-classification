@@ -11,13 +11,9 @@ from sklearn.svm import LinearSVC
 
 from sklearn.metrics import accuracy_score
 
+from functions.read_data import read_data
+
 # from great_tables import GT
-
-
-def read_data(x_test, y_test):
-    x = pd.read_csv(x_test)
-    y = pd.read_csv(y_test)
-    return x, y
 
 def read_model(out_dir):
     lr_pipe_path = os.path.join(out_dir, "trained_lr_pipe.pkl")
