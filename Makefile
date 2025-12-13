@@ -73,7 +73,7 @@ clean: ## Clean all generate outputs
 	rm -rf report/diabetes_analysis_files
 
 ## Data validation as separate call
-validate: src/05_15_data_validation.py src/objects/train_df.csv data/raw/diabetes_binary_health_indicators_BRFSS2015.csv
+validate: src/05_15_data_validation.py data/processed/train_df.csv data/raw/diabetes_binary_health_indicators_BRFSS2015.csv
 	python src/05_15_data_validation.py
 	touch src/objects/validation.done
 
