@@ -36,7 +36,9 @@ def main(train_file):
     X_train.to_csv('src/objects/X_train.csv', index=False)
     y_train.to_csv('src/objects/y_train.csv', index=False)
 
-    click.echo("Ran train set")
+    click.echo(
+        "-------------Ran train set-------------\nSaved:\nsrc/objects/X_train.csv\nsrc/objects/y_train.csv\n"
+    )
 
 if __name__ == '__main__':
     main()

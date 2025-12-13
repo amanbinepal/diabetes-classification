@@ -31,7 +31,9 @@ def main(input_file):
     train_df.to_csv('src/objects/train_df.csv', index=False)
     test_df.to_csv('src/objects/test_df.csv', index=False)
 
-    click.echo("Ran split")
+    click.echo(
+        "-------------Ran split-------------\nSaved:\nsrc/objects/train_df.csv\nsrc/objects/test_df.csv\n"
+    )
 
 if __name__ == '__main__':
     main()

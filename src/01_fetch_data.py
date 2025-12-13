@@ -19,14 +19,16 @@ def main():
     
     The dataset ID used for UCIMLRepo is 891 (Diabetes Binary Health Indicators).
     """
-    
+
     cdc_diabetes_health_indicators = fetch_ucirepo(id=891) 
     dat = cdc_diabetes_health_indicators.data.original
-    
+
     output_path = 'data/raw/diabetes_binary_health_indicators_BRFSS2015.csv'
     dat.to_csv(output_path, index=False)
 
-    click.echo("Ran fetch")
-    
+    click.echo(
+        "-------------Ran fetch-------------\nSaved: data/raw/diabetes_binary_health_indicators_BRFSS2015.csv\n"
+    )
+
 if __name__ == '__main__':
     main()

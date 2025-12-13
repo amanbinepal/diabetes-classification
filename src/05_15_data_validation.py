@@ -1,4 +1,23 @@
+# 05_15_data_validation.py
+# Author: Vy Phan
+# Date: 2025-12-11
+
+# This script goes through the following data validation checks:
+# Correct data file format
+# Correct column names
+# No empty observations
+# Missingness not beyond expected threshold
+# Correct data types in each column
+# No duplicate observations
+# No outlier or anomalous values
+# Correct category levels (i.e., no string mismatches or single values)
+# Target/response variable follows expected distribution
+# No anomalous correlations between target/response variable and features/explanatory variables
+# No anomalous correlations between features/explanatory variables
+
+
 import pandas as pd
+import click
 import pointblank as pb
 from deepchecks.tabular import Dataset, Suite
 from deepchecks.tabular.checks import ClassImbalance, FeatureLabelCorrelation, FeatureFeatureCorrelation
@@ -115,7 +134,6 @@ def save_result(validation, name, deepchecks=False):
     if not passed:
         print(f"Validation {name} failed!")
 
-
 if __name__ == "__main__":
     df = load_data()
     check_column_count(df)
@@ -129,3 +147,6 @@ if __name__ == "__main__":
     check_ordinal_ranges(df)  # prints value ranges; no pass/fail
     check_binary_and_categorical_levels(df)
     deepchecks_validation(df)
+    click.echo(
+        "-------------Data Validation Complete-------------\nSaved:\nValidation .txt scripts under objects folder\n"
+    )

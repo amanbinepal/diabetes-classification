@@ -1,3 +1,10 @@
+# 17_model_validation_training.py
+# Author: Ian gault
+# Date: 2025-12-6
+
+# This script cross validates and trains our models
+# Steps and outputs are recorded in the function below
+
 import click
 import pandas as pd
 import os
@@ -74,7 +81,6 @@ def model_training(x_train, y_train, out_dir="results/models"):
     # )
     preprocessor = create_preprocessor(numeric_feats, passthrough_feats)
 
-
     # ============================ Dummy classifier
 
     dummy_df = DummyClassifier(strategy="most_frequent", random_state=552)
@@ -106,7 +112,7 @@ def model_training(x_train, y_train, out_dir="results/models"):
     }
 
     results_table = pd.DataFrame(results)
-    # Also output as csv for score readin from quarto 
+    # Also output as csv for score readin from quarto
     results_table.to_csv(os.path.join(out_dir, "model_training.csv"), index=False)
 
     # ============================ Export Great Table
@@ -136,7 +142,9 @@ def model_training(x_train, y_train, out_dir="results/models"):
     with open(os.path.join(out_dir, "trained_linear_svc_pipe.pkl"), 'wb') as f:
         pickle.dump(linear_svc_pipe, f)
 
-    click.echo("Models trained and exported")
+    click.echo(
+        "-------------Models trained and exported-------------\nSaved:\ntrained_lr_pipe.pkl\ntrained_linear_svc_pipe.pkl\n"
+    )
 
 if __name__ == "__main__":
     model_training()
