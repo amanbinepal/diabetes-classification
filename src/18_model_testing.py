@@ -11,7 +11,27 @@ from sklearn.svm import LinearSVC
 
 from sklearn.metrics import accuracy_score
 
+from functions.read_data import read_data
+
 # from great_tables import GT
+
+def read_model(out_dir):
+    lr_pipe_path = os.path.join(out_dir, "trained_lr_pipe.pkl")
+    linear_svc_pipe_path = os.path.join(out_dir, "trained_linear_svc_pipe.pkl")
+
+    with open(lr_pipe_path, "rb") as f:
+        lr_pipe = pickle.load(f)
+
+    with open(linear_svc_pipe_path, "rb") as f:
+        linear_svc_pipe = pickle.load(f)
+
+    return lr_pipe, linear_svc_pipe
+
+def evaluate_model(pipe, X_test, y_test):
+    prediction = pipe.predict(X_test)
+    accuracy = accuracy_score(y_test, prediction)
+    return accuracy
+
 
 @click.command()
 @click.option(
@@ -37,22 +57,29 @@ def model_testing(x_test, y_test, out_dir="results/models"):
     """
 
     # ============================ read in test data
-    X_test = pd.read_csv(x_test)
-    y_test = pd.read_csv(y_test)
+    #X_test = pd.read_csv(x_test)
+    #y_test = pd.read_csv(y_test)
+    X_test, y_test = read_data(x_test, y_test)
 
     # ============================ read in models
-    with open(os.path.join(out_dir, "trained_lr_pipe.pkl"), "rb") as f:
-        lr_pipe = pickle.load(f)
+    #with open(os.path.join(out_dir, "trained_lr_pipe.pkl"), "rb") as f:
+    #    lr_pipe = pickle.load(f)
 
-    with open(os.path.join(out_dir, "trained_linear_svc_pipe.pkl"), "rb") as f:
-        linear_svc_pipe = pickle.load(f)
+    #with open(os.path.join(out_dir, "trained_linear_svc_pipe.pkl"), "rb") as f:
+    #    linear_svc_pipe = pickle.load(f)
+
+    lr_pipe, linear_svc_pipe = read_model(out_dir)
 
     # ============================ Test Models
-    prediction_lr = lr_pipe.predict(X_test)
-    accuracy_lr = accuracy_score(y_test, prediction_lr)
+    #prediction_lr = lr_pipe.predict(X_test)
+    #accuracy_lr = accuracy_score(y_test, prediction_lr)
 
-    prediction_svc = linear_svc_pipe.predict(X_test)
-    accuracy_svc = accuracy_score(y_test, prediction_svc)
+    #prediction_svc = linear_svc_pipe.predict(X_test)
+    #accuracy_svc = accuracy_score(y_test, prediction_svc)
+
+    accuracy_lr = evaluate_model(lr_pipe, X_test, y_test)
+    accuracy_svc = evaluate_model(linear_svc_pipe, X_test, y_test)
+
 
     # ============================ Make table
     test_results = {"Logistic Regression": accuracy_lr, "Linear SVC": accuracy_svc}
