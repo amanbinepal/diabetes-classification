@@ -5,6 +5,8 @@
 # This script cross validates and trains our models
 # Steps and outputs are recorded in the function below
 
+# Usage: python 17_model_validation_training.py
+
 import click
 import pandas as pd
 import os

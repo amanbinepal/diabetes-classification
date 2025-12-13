@@ -15,6 +15,9 @@
 # No anomalous correlations between target/response variable and features/explanatory variables
 # No anomalous correlations between features/explanatory variables
 
+# Usage:
+# python src/05_15_data_validation.py
+
 
 import pandas as pd
 import click
