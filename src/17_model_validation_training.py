@@ -10,6 +10,7 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.dummy import DummyClassifier
 from sklearn.linear_model import LogisticRegression
 from sklearn.svm import LinearSVC
+from functions.create_preprocessor import create_preprocessor
 
 # from great_tables import GT
 
@@ -68,9 +69,11 @@ def model_training(x_train, y_train, out_dir="results/models"):
 
     # ============================ Column transformer
 
-    preprocessor = make_column_transformer(
-        (StandardScaler(), numeric_feats), ("passthrough", passthrough_feats)
-    )
+    # preprocessor = make_column_transformer(
+    #     (StandardScaler(), numeric_feats), ("passthrough", passthrough_feats)
+    # )
+    preprocessor = create_preprocessor(numeric_feats, passthrough_feats)
+
 
     # ============================ Dummy classifier
 
