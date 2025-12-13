@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.33">
+<meta name="generator" content="quarto-1.8.26">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -26,14 +26,15 @@ ul.task-list li input[type="checkbox"] {
 <script src="CHANGELOG_files/libs/clipboard/clipboard.min.js"></script>
 <script src="CHANGELOG_files/libs/quarto-html/quarto.js" type="module"></script>
 <script src="CHANGELOG_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="CHANGELOG_files/libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="CHANGELOG_files/libs/quarto-html/popper.min.js"></script>
 <script src="CHANGELOG_files/libs/quarto-html/tippy.umd.min.js"></script>
 <script src="CHANGELOG_files/libs/quarto-html/anchor.min.js"></script>
 <link href="CHANGELOG_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="CHANGELOG_files/libs/quarto-html/quarto-syntax-highlighting-ea385d0e468b0dd5ea5bf0780b1290d9.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="CHANGELOG_files/libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="CHANGELOG_files/libs/bootstrap/bootstrap.min.js"></script>
 <link href="CHANGELOG_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="CHANGELOG_files/libs/bootstrap/bootstrap-81267100e462c21b3d6c0d5bf76a3417.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="CHANGELOG_files/libs/bootstrap/bootstrap-1e118674f8eeaf0dc11d6faf9a2d8791.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 
 
 </head>
@@ -53,7 +54,7 @@ ul.task-list li input[type="checkbox"] {
 <p>The format is based on <a href="https://keepachangelog.com/en/1.1.0/">Keep a Changelog</a>, and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semantic Versioning</a>.</p>
 <section id="feedback-by-jenniferonyebuchi" class="level2">
 <h2 class="anchored" data-anchor-id="feedback-by-jenniferonyebuchi">Feedback by <span class="citation" data-cites="Jenniferonyebuchi">@Jenniferonyebuchi</span>:</h2>
-<p>Feedback source: https://github.com/UBC-MDS/data-analysis-review-2025/issues/71 Pull Request:</p>
+<p>Feedback source: https://github.com/UBC-MDS/data-analysis-review-2025/issues/71 Pull Request: #75</p>
 <section id="added" class="level3">
 <h3 class="anchored" data-anchor-id="added">Added</h3>
 <ul>
@@ -80,7 +81,7 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="feedback-by-rnanfuka" class="level2">
 <h2 class="anchored" data-anchor-id="feedback-by-rnanfuka">Feedback by <span class="citation" data-cites="RNanfuka">@RNanfuka</span></h2>
-<p>Feedback source: https://github.com/UBC-MDS/data-analysis-review-2025/issues/70</p>
+<p>Feedback source: https://github.com/UBC-MDS/data-analysis-review-2025/issues/70 Pull Request: #79</p>
 <section id="added-2" class="level3">
 <h3 class="anchored" data-anchor-id="added-2">Added</h3>
 <ul>
@@ -96,8 +97,8 @@ ul.task-list li input[type="checkbox"] {
 <section id="added-3" class="level3">
 <h3 class="anchored" data-anchor-id="added-3">Added</h3>
 <ul>
-<li>Fixed README.md Method 1 and 2 from .ipynb to .py methods</li>
-<li>Fixed storing location for processed data (/src/objects -&gt; /data/processed) and made changes to Makefile, Quarto report accordingly.</li>
+<li>Fixed README.md Method 1 and 2 from .ipynb to .py methods Pull Request: #79</li>
+<li>Fixed storing location for processed data (/src/objects -&gt; /data/processed) and made changes to Makefile, Quarto report accordingly. Pull Request: #80</li>
 </ul>
 </section>
 </section>
@@ -156,13 +157,14 @@ ul.task-list li input[type="checkbox"] {
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy

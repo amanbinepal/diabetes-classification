@@ -5,6 +5,8 @@
 # This script going through our exploratory data analysis.
 # Outputs are recorded in the function below
 
+# Usage: python 16_eda_visualization.py
+
 import click
 import pandas as pd
 import altair as alt

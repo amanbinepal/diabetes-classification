@@ -5,6 +5,8 @@
 # This script tests our trained models on unseen data and gets accuracy scores
 # Steps and outputs are recorded in the function below
 
+# Usage: python 18_model_testing.py
+
 import click
 import pandas as pd
 import os

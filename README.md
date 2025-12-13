@@ -122,6 +122,12 @@ After the analysis has run, you can run the data validation script. This will pr
 make validate
 ```
 
+To run tests on our functions used, run the follow command from the command line root:
+
+```bash
+pytest
+```
+
 ## Dependencies
 
 ### Tools Used
@@ -145,6 +151,7 @@ make validate
 - click=8.1.7
 - quarto=1.8.26
 - ipython=9.0.0
+- pytest=9.0.2
 
 ### Pip Dependencies
 
