@@ -2,7 +2,8 @@
 ## author: Vy Phan
 ## 2025-12-11
 
-# This script test the create preprocessor function used in the 17_mode_validation_training.py script
+# This script test the create preprocessor function used in \
+# the 17_mode_validation_training.py script
 
 # Usage: pytest from command line root
 

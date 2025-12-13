@@ -2,7 +2,8 @@
 ## author: Emily Jin
 ## 2025-12-11
 
-# This script test the evaluate_model function used in the 18_model_testing.py script
+# This script test the evaluate_model function used in the \
+# 18_model_testing.py script
 
 # Usage: pytest from command line root
 
