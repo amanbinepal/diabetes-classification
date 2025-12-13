@@ -16,7 +16,7 @@ Date was sourced from: https://archive.ics.uci.edu/dataset/891/cdc+diabetes+heal
 
 ## Report
 
-The final report can be found in src folder.
+The final report can be found in the report folder.
 
 ## Usage
 
@@ -36,16 +36,24 @@ docker compose up -d
 
 3. Open the JupyterLab URL displayed in the terminal (starts with http://127.0.0.1:8888/lab...)
 
-4. To run the analysis, navigate to src/ and open diabetest_analysis.ipynb in the JupyterLab launched from previous step. In the Kernel tab, click Restart Kernel and Run All Cells....
+4. To run the analysis, navigate to src/ and open individual scripts in the JupyterLab launched from previous step. In the Kernel tab, click Restart Kernel and Run All Cells....
 
 5. To stop the container, press Ctrl + C in the terminal and run:
 
 ``` bash
 docker compose stop
 ```
+
+6. To remove docker container from machine (free up space)
+
+```bash
+docker compose rm
+```
+
 #### For Returning User:
 
 To get the latest image after updates:
+
 ``` bash
 docker compose pull
 docker compose up
@@ -64,7 +72,9 @@ https://github.com/amanbinepal/diabetes-classification.git
 ``` bash
 conda env create --file environment.yml
 ```
+
 Alternatively, use conda-lock for a faster installation (must have conda-lock installed):
+
 ``` bash
 conda-lock install --name 522-project conda-lock.yml
 ```
@@ -81,7 +91,7 @@ conda activate 522-project
 jupyter lab
 ```
 
-5. Open src/diabetes_analysis.ipynb in Jupyter Lab
+5. Navigate to src and run individual scripts under src folder in Jupyter Lab
 
 6. Under Switch Kernel, make sure that Python [conda env:522-project] is selected.
 
@@ -89,76 +99,27 @@ jupyter lab
 
 ### Analysis Pipeline - Running Commands from Terminal
 
-These commands will allow the user to run through each section of the analysis in chunks or all at once. This will re-create the ouputs of our analysis, which feeds into the `diabetes_analysis.qmd`. 
+These commands will allow the user to run through the analysis all at once. This will re-create the ouputs of our analysis, which feeds into the `diabetes_analysis.qmd`. 
 
 From the command terminal, `cd` into the root of the `diabetes-classification` repo, which has been cloned onto your local machine.  
 
-To run an individual script from the command line:  
+To clean all temporary objects (i.e., delete all files under src > objects), run the following command:
 
-``` bash
-python src/example_script_title.py
+```bash
+make clean
 ```
 
-Alternatively, the following `make` commands can run the scripts in batches or all at once, as shown below. Descriptions of each script are annotated in the individual files.
-
-1. Run scripts for fetching and splitting the data
-
-This will run the following scripts:
+To run the full pipeline and rerender the quarto document, run the following command:
 
 ``` bash
-make fetch
+make all
 ```
 
-- src/01_fetch_data.py
-- src/02_split_data.py
-- src/03_train_set.py
-- src/04_test_set.py
 
-2. Run scripts for data validation
+After the analysis has run, you can run the data validation script. This will print results in the command terminal and produce temporary txt files under the objects folder. The command:
 
 ``` bash
 make validate
-```
-
-This will run the following scripts:
-
-- src/05_data_validation1_1.py
-- src/06_data_validation1_2.py
-- src/07_data_validation2.py
-- src/08_data_validation3.py
-- src/09_data_validation4.py
-- src/10_data_validation5.py
-- src/11_data_validation6.py
-- src/12_data_validation7.py
-- src/13_data_validation8.py
-- src/14_data_validation9.py
-- src/15_data_validation10.py
-
-3. Run script for EDA
-
-This will run the following script:
-
-``` bash
-make eda
-```
-
-- src/16_eda_visualization.py
-
-3. Run scripts for model training and testing
-
-This will run the following scripts:
-
-``` bash
-make model
-```
-
-- src/17_model_validation_training.py
-- src/18_model_testing.py
-
-4. Or, run through the full pipeline all at once
-
-``` bash
-make pipeline
 ```
 
 ## Dependencies

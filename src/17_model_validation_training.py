@@ -44,7 +44,7 @@ def model_training(x_train, y_train, out_dir="results/models"):
 
     # ============================ read in training and test data
     X_train = pd.read_csv(x_train)
-    y_train = pd.read_csv(y_train)
+    y_train = pd.read_csv(y_train).iloc[:, 0]
 
     # ============================ Feature processing for model
     # features
