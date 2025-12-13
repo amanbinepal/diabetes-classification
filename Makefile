@@ -65,6 +65,7 @@ docker-build-local: ## Build single-arch image for local testing (current platfo
 .PHONY: clean validate
 clean: ## Clean all generate outputs
 	rm -f data/raw/*
+	rm -f data/processed/*
 	rm -f src/objects/*
 	rm -f results/figures/*
 	rm -f results/models/*
@@ -81,47 +82,47 @@ data/raw/diabetes_binary_health_indicators_BRFSS2015.csv: src/01_fetch_data.py
 	python src/01_fetch_data.py
 
 # ================================== Dependency Track of 02_split_data.py's output
-src/objects/train_df.csv: src/02_split_data.py data/raw/diabetes_binary_health_indicators_BRFSS2015.csv
+data/processed/train_df.csv: src/02_split_data.py data/raw/diabetes_binary_health_indicators_BRFSS2015.csv
 	python src/02_split_data.py
 
-src/objects/test_df.csv: src/02_split_data.py data/raw/diabetes_binary_health_indicators_BRFSS2015.csv
+data/processed/test_df.csv: src/02_split_data.py data/raw/diabetes_binary_health_indicators_BRFSS2015.csv
 	python src/02_split_data.py
 
 # ================================== Dependency Track of 03_train_set.py's output
-src/objects/X_train.csv: src/03_train_set.py src/objects/train_df.csv
+data/processed/X_train.csv: src/03_train_set.py data/processed/train_df.csv
 	python src/03_train_set.py
 
-src/objects/y_train.csv: src/03_train_set.py src/objects/train_df.csv
+data/processed/y_train.csv: src/03_train_set.py data/processed/train_df.csv
 	python src/03_train_set.py
 
 # ================================== Dependency Track of 04_test_set.py's output
-src/objects/X_test.csv: src/04_test_set.py src/objects/test_df.csv
+data/processed/X_test.csv: src/04_test_set.py data/processed/test_df.csv
 	python src/04_test_set.py
 
-src/objects/y_test.csv: src/04_test_set.py src/objects/test_df.csv
+data/processed/y_test.csv: src/04_test_set.py data/processed/test_df.csv
 	python src/04_test_set.py
 
 # ================================== Dependency Track of 16_eda_visualization.py's output
-results/figures/plot_class.png: src/16_eda_visualization.py src/objects/train_df.csv
+results/figures/plot_class.png: src/16_eda_visualization.py data/processed/train_df.csv
 	python src/16_eda_visualization.py
 
-results/figures/plot_numeric_box.png: src/16_eda_visualization.py src/objects/train_df.csv
+results/figures/plot_numeric_box.png: src/16_eda_visualization.py data/processed/train_df.csv
 	python src/16_eda_visualization.py
 
-results/figures/plot_binary_bar.png: src/16_eda_visualization.py src/objects/train_df.csv
+results/figures/plot_binary_bar.png: src/16_eda_visualization.py data/processed/train_df.csv
 	python src/16_eda_visualization.py
 
-results/figures/plot_ordinal_bar.png: src/16_eda_visualization.py src/objects/train_df.csv
+results/figures/plot_ordinal_bar.png: src/16_eda_visualization.py data/processed/train_df.csv
 	python src/16_eda_visualization.py
 
 # ================================== Dependency Track of 17_model_validation_training.py's output
-results/models/model_training.csv: src/17_model_validation_training.py src/objects/X_train.csv src/objects/y_train.csv
+results/models/model_training.csv: src/17_model_validation_training.py data/processed/X_train.csv data/processed/y_train.csv
 	python src/17_model_validation_training.py
 
 # ================================== Dependency Track of 18_model_testing.py's output
-results/models/model_testing.csv: src/18_model_testing.py src/objects/X_test.csv src/objects/y_test.csv
+results/models/model_testing.csv: src/18_model_testing.py data/processed/X_test.csv data/processed/y_test.csv
 	python src/18_model_testing.py
 
 # ================================== Dependency Track of quarto diabetes_analysis.qmd output
-report/diabetes_analysis.html: report/diabetes_analysis.qmd report/reference.bib src/objects/train_df.csv src/objects/test_df.csv results/models/model_training.csv results/models/model_testing.csv results/figures/plot_class.png results/figures/plot_ordinal_bar.png results/figures/plot_numeric_box.png results/figures/plot_binary_bar.png
+report/diabetes_analysis.html: report/diabetes_analysis.qmd report/reference.bib data/processed/train_df.csv data/processed/test_df.csv results/models/model_training.csv results/models/model_testing.csv results/figures/plot_class.png results/figures/plot_ordinal_bar.png results/figures/plot_numeric_box.png results/figures/plot_binary_bar.png
 	quarto render report/diabetes_analysis.qmd --to html

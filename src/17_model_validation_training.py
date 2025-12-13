@@ -25,12 +25,12 @@ from functions.create_preprocessor import create_preprocessor
 @click.command()
 @click.option(
     "--x-train",
-    default="src/objects/X_train.csv",
+    default="data/processed/X_train.csv",
     help="Feature Training dataset CSV file",
 )
 @click.option(
     "--y-train",
-    default="src/objects/y_train.csv",
+    default="data/processed/y_train.csv",
     help="Response Training dataset CSV file",
 )
 def model_training(x_train, y_train, out_dir="results/models"):
@@ -44,8 +44,8 @@ def model_training(x_train, y_train, out_dir="results/models"):
         7. Exports models as pickles for testing (*.pkl)
 
     Args:
-        x_train (string): the path to the x_train data set Defaults to "src/objects/X_train.csv".
-        y_train (string): the path to the y_train data set Defaults to "src/objects/y_train.csv".
+        x_train (string): the path to the x_train data set Defaults to "data/processed/X_train.csv".
+        y_train (string): the path to the y_train data set Defaults to "data/processed/y_train.csv".
         out_dir (str, optional): the folder to save the plots. Defaults to "results/models".
     """
 

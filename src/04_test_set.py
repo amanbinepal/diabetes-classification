@@ -6,13 +6,13 @@
 # and saves them as separate CSV files in a user-specified directory.
 
 # Usage:
-# python src/04_split_test_features.py --test-file=src/objects/test_df.csv --output-dir=src/objects
+# python src/04_split_test_features.py --test-file=data/processed/test_df.csv --output-dir=data/processed
 
 import click
 import pandas as pd
 
 @click.command()
-@click.option('--test-file', default='src/objects/test_df.csv', help='Test CSV file')
+@click.option('--test-file', default='data/processed/test_df.csv', help='Test CSV file')
 
 def main(test_file):
     """
@@ -34,11 +34,11 @@ def main(test_file):
     )
 
     # Save as CSV
-    X_test.to_csv('src/objects/X_test.csv', index=False)
-    y_test.to_csv('src/objects/y_test.csv', index=False)
+    X_test.to_csv('data/processed/X_test.csv', index=False)
+    y_test.to_csv('data/processed/y_test.csv', index=False)
 
     click.echo(
-        "-------------Ran test set-------------\nSaved:\nsrc/objects/X_test.csv\nsrc/objects/y_test.csv\n"
+        "-------------Ran test set-------------\nSaved:\ndata/processed/X_test.csv\ndata/processed/y_test.csv\n"
     )
 
 if __name__ == '__main__':
