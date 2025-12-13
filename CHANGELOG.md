@@ -8,7 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Feedback by @Jenniferonyebuchi:
 
 Feedback source: https://github.com/UBC-MDS/data-analysis-review-2025/issues/71
-Pull Request:
+Pull Request: #75
 
 ### Added
 
@@ -30,6 +30,7 @@ Feedback source: https://github.com/UBC-MDS/data-analysis-review-2025/issues/84
 ## Feedback by @RNanfuka
 
 Feedback source: https://github.com/UBC-MDS/data-analysis-review-2025/issues/70 
+Pull Request: #79
 
 ### Added
 
@@ -43,7 +44,7 @@ Feedback source: https://github.com/UBC-MDS/data-analysis-review-2025/issues/60
 
 ### Added
 
-- Fixed README.md Method 1 and 2 from .ipynb to .py methods
-- Fixed storing location for processed data (/src/objects -> /data/processed) and made changes to Makefile, Quarto report accordingly. 
+- Fixed README.md Method 1 and 2 from .ipynb to .py methods Pull Request: #79
+- Fixed storing location for processed data (/src/objects -> /data/processed) and made changes to Makefile, Quarto report accordingly. Pull Request: #80
 
 
