@@ -4,7 +4,7 @@
 
 # This script tests the read_model function used in the 18_model_testing.py script.
 
-# Usage:
+# Usage: pytest from command line root
 
 import sys
 import os

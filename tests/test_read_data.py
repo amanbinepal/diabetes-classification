@@ -4,7 +4,7 @@
 
 # This script tests the read_data function used in the 18_model_testing.py script.
 
-# Usage:
+# Usage: pytest from command line root
 
 import sys
 import os
@@ -19,8 +19,8 @@ def test_read_data():
     Docstring for test_read_data
     This function confirms that our X_test and y_test data are data frames and are not empty.
     '''
-    x_test_data = "src/objects/X_test.csv"
-    y_test_data = "src/objects/y_test.csv"
+    x_test_data = "data/processed/X_test.csv"
+    y_test_data = "data/processed/y_test.csv"
 
     X_test, y_test = read_data(x_test_data, y_test_data)
 

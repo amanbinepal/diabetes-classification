@@ -4,7 +4,7 @@
 
 # This script test the evaluate_model function used in the 18_model_testing.py script
 
-# Usage:
+# Usage: pytest from command line root
 
 import sys
 import os
@@ -21,7 +21,7 @@ def test_evaluate_model():
     Docstring for test_evaluate_model
     This function ensures that the accuracy score of our two model are between 0 and 1.
     '''
-    X_test, y_test = read_data("src/objects/X_test.csv", "src/objects/y_test.csv")
+    X_test, y_test = read_data("data/processed/X_test.csv", "data/processed/y_test.csv")
     lr_pipe, linear_svc_pipe = read_model("results/models")
 
     accuracy_lr = evaluate_model(lr_pipe, X_test, y_test)

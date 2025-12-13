@@ -4,7 +4,7 @@
 
 # This script test the create preprocessor function used in the 17_mode_validation_training.py script
 
-# Usage:
+# Usage: pytest from command line root
 
 import sys
 import os
