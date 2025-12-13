@@ -3,7 +3,7 @@ import os
 
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 
-from src.create_preprocessor import create_preprocessor
+from src.functions.create_preprocessor import create_preprocessor
 from sklearn.compose import ColumnTransformer
 from sklearn.preprocessing import StandardScaler
 

@@ -3,7 +3,10 @@ import os
 
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 
-from src.model_testing import evaluate_model, read_model, read_data
+from src.functions.read_data import read_data
+from src.functions.evaluate_model import evaluate_model
+from src.functions.read_model import read_model
+
 
 def test_evaluate_model():
     X_test, y_test = read_data("src/objects/X_test.csv", "src/objects/y_test.csv")

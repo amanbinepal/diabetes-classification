@@ -4,7 +4,7 @@ import pandas as pd
 
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 
-from functions.read_data import read_data
+from src.functions.read_data import read_data
 
 def test_read_data():
     x_test_data = "src/objects/X_test.csv"
