@@ -1,6 +1,6 @@
 # Contributing to the Diabetes project
 
-This outlines how to propose a change to the DSCI522 Group44 Diabetes project. 
+This outlines how to propose a change to the DSCI522 Group44 Diabetes project. Community members are welcome to reach out to the team to ask questions or seek support in their analysis.
 
 ### Fixing typos
 

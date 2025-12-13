@@ -1,3 +1,10 @@
+# 17_model_validation_training.py
+# Author: Ian Gault, Aman Binepal
+# Date: 2025-12-11
+
+# This script tests our trained models on unseen data and gets accuracy scores
+# Steps and outputs are recorded in the function below
+
 import click
 import pandas as pd
 import os
@@ -42,35 +49,34 @@ def model_testing(x_test, y_test, out_dir="results/models"):
     """
 
     # ============================ read in test data
-    #X_test = pd.read_csv(x_test)
-    #y_test = pd.read_csv(y_test)
+    # X_test = pd.read_csv(x_test)
+    # y_test = pd.read_csv(y_test)
     X_test, y_test = read_data(x_test, y_test)
 
     # ============================ read in models
-    #with open(os.path.join(out_dir, "trained_lr_pipe.pkl"), "rb") as f:
+    # with open(os.path.join(out_dir, "trained_lr_pipe.pkl"), "rb") as f:
     #    lr_pipe = pickle.load(f)
 
-    #with open(os.path.join(out_dir, "trained_linear_svc_pipe.pkl"), "rb") as f:
+    # with open(os.path.join(out_dir, "trained_linear_svc_pipe.pkl"), "rb") as f:
     #    linear_svc_pipe = pickle.load(f)
 
     lr_pipe, linear_svc_pipe = read_model(out_dir)
 
     # ============================ Test Models
-    #prediction_lr = lr_pipe.predict(X_test)
-    #accuracy_lr = accuracy_score(y_test, prediction_lr)
+    # prediction_lr = lr_pipe.predict(X_test)
+    # accuracy_lr = accuracy_score(y_test, prediction_lr)
 
-    #prediction_svc = linear_svc_pipe.predict(X_test)
-    #accuracy_svc = accuracy_score(y_test, prediction_svc)
+    # prediction_svc = linear_svc_pipe.predict(X_test)
+    # accuracy_svc = accuracy_score(y_test, prediction_svc)
 
     accuracy_lr = evaluate_model(lr_pipe, X_test, y_test)
     accuracy_svc = evaluate_model(linear_svc_pipe, X_test, y_test)
-
 
     # ============================ Make table
     test_results = {"Logistic Regression": accuracy_lr, "Linear SVC": accuracy_svc}
 
     test_results = pd.DataFrame([test_results], index=['Accuracy'])
-    # Also output as csv for score readin from quarto 
+    # Also output as csv for score readin from quarto
     test_results.to_csv(os.path.join(out_dir, "model_testing.csv"), index=False)
 
     # ============================ Export Great Table
@@ -87,7 +93,7 @@ def model_testing(x_test, y_test, out_dir="results/models"):
 
     # ============================ Export Models
 
-    click.echo("Models tested")
+    click.echo("-------------Models tested-------------\nSaved:\nmodel_testing.csv\n")
 
 if __name__ == "__main__":
     model_testing()

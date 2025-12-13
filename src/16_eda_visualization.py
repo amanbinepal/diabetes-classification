@@ -1,3 +1,10 @@
+# 16_eda_visualization.py
+# Author: Emily Jin
+# Date: 2025-12-6
+
+# This script going through our exploratory data analysis.
+# Outputs are recorded in the function below
+
 import click
 import pandas as pd
 import altair as alt
@@ -90,7 +97,7 @@ def data_visualization(train_file, out_dir="results/figures"):
 
     chart_ordinal_bar.save(os.path.join(out_dir, 'plot_ordinal_bar.png'), scale_factor=2.0)
 
-    click.echo('EDA figures created')
+    click.echo("-------------EDA figures created-------------\nSaved:\nplot_class.png\nplot_numeric_box.png\nplot_binary_bar.png\nplot_ordinal_bar.png\n")
 
 
 if __name__ == "__main__":

@@ -41,6 +41,10 @@ up: ## stop and start docker-compose services
 stop: ## stop docker-compose services
 	docker-compose stop
 
+.PHONY: remove
+remove: ## Remove docker container from machine (free up space)
+	docker compose rm
+
 # docker multi architecture build rules (from Claude) -----
 
 .PHONY: docker-build-push
@@ -58,37 +62,7 @@ docker-build-local: ## Build single-arch image for local testing (current platfo
 		--tag amanbinepal/docker-522-project:local \
 		.
 
-.PHONY: pipeline fetch validate
-
-# pipeline: fetch validate eda model ## Run full pipeline
-
-# fetch: ## Run scripts for fetching and splitting data
-# 	python src/01_fetch_data.py
-# 	python src/02_split_data.py
-# 	python src/03_train_set.py
-# 	python src/04_test_set.py
-
-# validate: # Run scripts for data validation
-# 	python src/05_data_validation1_1.py
-# 	python src/06_data_validation1_2.py
-# 	python src/07_data_validation2.py
-# 	python src/08_data_validation3.py
-# 	python src/09_data_validation4.py
-# 	python src/10_data_validation5.py
-# 	python src/11_data_validation6.py
-# 	python src/12_data_validation7.py
-# 	python src/13_data_validation8.py
-# 	python src/14_data_validation9.py
-# 	python src/15_data_validation10.py
-
-# eda: ## Run EDA
-# 	python src/16_eda_visualization.py
-
-# model: ## Run model training and testing
-# 	python src/17_model_validation_training.py
-# 	python src/18_model_testing.py
-
-.PHONY: clean
+.PHONY: clean validate
 clean: ## Clean all generate outputs
 	rm -f data/raw/*
 	rm -f src/objects/*
@@ -96,6 +70,11 @@ clean: ## Clean all generate outputs
 	rm -f results/models/*
 	rm -f report/diabetes_analysis.html
 	rm -rf report/diabetes_analysis_files
+
+## Data validation as separate call
+validate: src/05_15_data_validation.py src/objects/train_df.csv data/raw/diabetes_binary_health_indicators_BRFSS2015.csv
+	python src/05_15_data_validation.py
+	touch src/objects/validation.done
 
 # ================================== Dependency Track of 01_fetch_data.py's output
 data/raw/diabetes_binary_health_indicators_BRFSS2015.csv: src/01_fetch_data.py
@@ -145,4 +124,4 @@ results/models/model_testing.csv: src/18_model_testing.py src/objects/X_test.csv
 
 # ================================== Dependency Track of quarto diabetes_analysis.qmd output
 report/diabetes_analysis.html: report/diabetes_analysis.qmd report/reference.bib src/objects/train_df.csv src/objects/test_df.csv results/models/model_training.csv results/models/model_testing.csv results/figures/plot_class.png results/figures/plot_ordinal_bar.png results/figures/plot_numeric_box.png results/figures/plot_binary_bar.png
-	quarto render report/diabetes_analysis.qmd
+	quarto render report/diabetes_analysis.qmd --to html

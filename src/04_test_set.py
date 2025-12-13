@@ -37,7 +37,9 @@ def main(test_file):
     X_test.to_csv('src/objects/X_test.csv', index=False)
     y_test.to_csv('src/objects/y_test.csv', index=False)
 
-    click.echo("Ran test set")
+    click.echo(
+        "-------------Ran test set-------------\nSaved:\nsrc/objects/X_test.csv\nsrc/objects/y_test.csv\n"
+    )
 
 if __name__ == '__main__':
     main()
