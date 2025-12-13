@@ -1,3 +1,11 @@
+## test_create_preprocessor.py
+## author: Vy Phan
+## 2025-12-11
+
+# This script test the create preprocessor function used in the 17_mode_validation_training.py script
+
+# Usage:
+
 import sys
 import os
 
@@ -9,6 +17,14 @@ from sklearn.preprocessing import StandardScaler
 
 
 def test_create_preprocessor():
+    '''
+    Docstring for test_create_preprocessor
+    This function test:
+    - That the numeric features are being transformed by a Standard Scaler
+    - That the correct numeric features are use
+    - That the passthrough transformer is not set
+    - That the passthrough features are correct
+    '''
     numeric_feats = ["age", "income"]
     passthrough_feats = ["city"]
 

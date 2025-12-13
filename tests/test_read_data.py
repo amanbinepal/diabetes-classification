@@ -1,3 +1,11 @@
+## test_evaluate_model.py
+## author: Aman Binepal
+## 2025-12-11
+
+# This script tests the read_data function used in the 18_model_testing.py script.
+
+# Usage:
+
 import sys
 import os
 import pandas as pd
@@ -7,6 +15,10 @@ sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 from src.functions.read_data import read_data
 
 def test_read_data():
+    '''
+    Docstring for test_read_data
+    This function confirms that our X_test and y_test data are data frames and are not empty.
+    '''
     x_test_data = "src/objects/X_test.csv"
     y_test_data = "src/objects/y_test.csv"
 
@@ -16,4 +28,3 @@ def test_read_data():
     assert isinstance(y_test, pd.DataFrame), "y_test is not a DataFrame"
     assert not X_test.empty, "X_test is empty"
     assert not y_test.empty, "y_test is empty"
-
