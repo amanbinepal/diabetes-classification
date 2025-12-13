@@ -5,13 +5,13 @@
 # This script splits the training dataset into features (X_train) and target (y_train),
 # and saves them as separate CSV files in a specified directory.
 
-# Usage: python src/03_split_train_features.py --train-file=src/objects/train_df.csv --output-dir=src/objects
+# Usage: python src/03_split_train_features.py --train-file=data/processed/train_df.csv --output-dir=data/processed
 
 import click
 import pandas as pd
 
 @click.command()
-@click.option('--train-file', default='src/objects/train_df.csv', help='Training dataset CSV file')
+@click.option('--train-file', default='data/processed/train_df.csv', help='Training dataset CSV file')
 
 def main(train_file):
     """
@@ -33,11 +33,11 @@ def main(train_file):
     )
 
     # Save as CSV
-    X_train.to_csv('src/objects/X_train.csv', index=False)
-    y_train.to_csv('src/objects/y_train.csv', index=False)
+    X_train.to_csv('data/processed/X_train.csv', index=False)
+    y_train.to_csv('data/processed/y_train.csv', index=False)
 
     click.echo(
-        "-------------Ran train set-------------\nSaved:\nsrc/objects/X_train.csv\nsrc/objects/y_train.csv\n"
+        "-------------Ran train set-------------\nSaved:\ndata/processed/X_train.csv\ndata/processed/y_train.csv\n"
     )
 
 if __name__ == '__main__':

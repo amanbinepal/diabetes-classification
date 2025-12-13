@@ -13,7 +13,7 @@ import os
 
 @click.command()
 @click.option(
-    "--train-file", default="src/objects/train_df.csv", help="Training dataset CSV file"
+    "--train-file", default="data/processed/train_df.csv", help="Training dataset CSV file"
 )
 def data_visualization(train_file, out_dir="results/figures"): 
     """This function generates 4 plots that are used for EDA data visualization. 
@@ -23,7 +23,7 @@ def data_visualization(train_file, out_dir="results/figures"):
         4. ordinal features' bar chart by classes ("plot_ordinal_bar.png")
 
     Args:
-        train_file (string): the path to the train data set Defaults to "objects/train_df.csv".
+        train_file (string): the path to the train data set Defaults to "data/processed/train_df.csv".
         out_dir (str, optional): the folder to save the plots. Defaults to "../results/figures".
     """
 

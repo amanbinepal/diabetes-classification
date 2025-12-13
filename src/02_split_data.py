@@ -28,11 +28,11 @@ def main(input_file):
     train_df, test_df = train_test_split(dat, test_size=0.2, random_state=522)
 
     # Save as CSV
-    train_df.to_csv('src/objects/train_df.csv', index=False)
-    test_df.to_csv('src/objects/test_df.csv', index=False)
+    train_df.to_csv('data/processed/train_df.csv', index=False)
+    test_df.to_csv('data/processed/test_df.csv', index=False)
 
     click.echo(
-        "-------------Ran split-------------\nSaved:\nsrc/objects/train_df.csv\nsrc/objects/test_df.csv\n"
+        "-------------Ran split-------------\nSaved:\ndata/processed/train_df.csv\ndata/processed/test_df.csv\n"
     )
 
 if __name__ == '__main__':

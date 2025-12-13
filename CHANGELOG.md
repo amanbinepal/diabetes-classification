@@ -44,3 +44,6 @@ Feedback source: https://github.com/UBC-MDS/data-analysis-review-2025/issues/60
 ### Added
 
 - Fixed README.md Method 1 and 2 from .ipynb to .py methods
+- Fixed storing location for processed data (/src/objects -> /data/processed) and made changes to Makefile, Quarto report accordingly. 
+
+

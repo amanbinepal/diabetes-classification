@@ -28,8 +28,8 @@ from tabulate import tabulate
 
 ```{python}
 #| echo: false
-train_df = pd.read_csv("../src/objects/train_df.csv")
-test_df = pd.read_csv("../src/objects/test_df.csv")
+train_df = pd.read_csv("../data/processed/train_df.csv")
+test_df = pd.read_csv("../data/processed/test_df.csv")
 # =============================== to get the train, test %
 n_train = train_df.shape[0]
 n_test = test_df.shape[0]

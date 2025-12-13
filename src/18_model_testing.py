@@ -28,12 +28,12 @@ from functions.read_model import read_model
 @click.command()
 @click.option(
     "--x-test",
-    default="src/objects/X_test.csv",
+    default="data/processed/X_test.csv",
     help="Feature test dataset CSV file",
 )
 @click.option(
     "--y-test",
-    default="src/objects/y_test.csv",
+    default="data/processed/y_test.csv",
     help="Response test dataset CSV file",
 )
 def model_testing(x_test, y_test, out_dir="results/models"):
@@ -43,8 +43,8 @@ def model_testing(x_test, y_test, out_dir="results/models"):
         3. Creates accuracy score table to "model_testing.png"
 
     Args:
-        x_test (string): the path to the x_test data set Defaults to "src/objects/X_test.csv".
-        y_test (string): the path to the y_test data set Defaults to "src/objects/y_test.csv".
+        x_test (string): the path to the x_test data set Defaults to "data/processed/X_test.csv".
+        y_test (string): the path to the y_test data set Defaults to "data/processed/y_test.csv".
         out_dir (str, optional): the folder to save the plots. Defaults to "results/models".
     """
 

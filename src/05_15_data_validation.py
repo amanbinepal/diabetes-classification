@@ -22,7 +22,7 @@ import pointblank as pb
 from deepchecks.tabular import Dataset, Suite
 from deepchecks.tabular.checks import ClassImbalance, FeatureLabelCorrelation, FeatureFeatureCorrelation
 
-TRAIN_CSV = "src/objects/train_df.csv"
+TRAIN_CSV = "data/processed/train_df.csv"
 
 def load_data():
     return pd.read_csv(TRAIN_CSV)
